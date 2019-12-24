@@ -1,13 +1,33 @@
-# README
+# To Do List
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## About Me
 
-Things you may want to cover:
+Name: Dorcas Tabitha Tan
+Matriculation number: A0190356A
+
+## About *To Do List*
+
+*To Do List* provides an easy way to keep track of things that need to be done.
+
+Once complete, it will have the following features:
+1. Basic task management (create, edit, and delete tasks)
+2. Tagging and searching
+
+## Using the application
+
+How to get *To Do List* running:
+
+1. ...
+
+Software-related information:
 
 * Ruby version
+    * Version 2.6.5
 
 * System dependencies
+
+    * Rails 6.0.0
+    * React 16.12.0
 
 * Configuration
 
@@ -16,6 +36,7 @@ Things you may want to cover:
 * Database initialization
 
 * How to run the test suite
+    * Run `rails test`
 
 * Services (job queues, cache servers, search engines, etc.)
 
