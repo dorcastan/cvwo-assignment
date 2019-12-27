@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "@reach/router";
+import ShowTodos from "./ShowTodos";
 
-function TodoList() {
-    const [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        const requestTodos = async () => {
-            const response = await fetch("api/todos");
-            const { data } = await response.json();
-            setTodos(data);
-        };
-        requestTodos();
-    }, []);
-
-    return todos.map(todo => <div>{ todo.attributes.title }</div>);
-}
+const TodoList = () => (
+    <div>
+        <h1>Your To-Dos</h1>
+        <ShowTodos />
+        <Link to="/add">Add a new to-do</Link>
+    </div>
+);
 
 export default TodoList;
