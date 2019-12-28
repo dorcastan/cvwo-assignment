@@ -5,6 +5,10 @@
 Name: Dorcas Tabitha Tan
 Matriculation number: A0190356A
 
+Links to mid-assignment submission:
+* [Screenshot showing Rails installation](/docs/rails-screenshot)
+* [Write-up](/docs/mid-assignment-write-up) (to be added)
+
 ## About *To Do List*
 
 *To Do List* provides an easy way to keep track of things that need to be done.
