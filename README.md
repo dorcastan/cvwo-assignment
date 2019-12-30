@@ -2,12 +2,14 @@
 
 ## About Me
 
-Name: Dorcas Tabitha Tan
-Matriculation number: A0190356A
+Name | Matriculation number
+---- | ----
+Dorcas Tabitha Tan | A0190356A
 
-Links to mid-assignment submission:
-* [Screenshot showing Rails installation](/docs/rails-screenshot)
-* [Write-up](/docs/mid-assignment-write-up) (to be added)
+Mid-assignment submission:
+* ![Screenshot showing Rails installation](/docs/rails-screenshot.png)
+* [Write-up](/docs/mid-assignment-write-up.pdf)
+* [Learning journal](/docs/Journal.md)
 
 ## About *To Do List*
 
@@ -21,7 +23,8 @@ Once complete, it will have the following features:
 
 How to get *To Do List* running:
 
-1. ...
+1. In development mode: run `foreman start -f Procfile.dev`
+2. ...
 
 Software-related information:
 
