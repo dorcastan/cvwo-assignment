@@ -55,7 +55,7 @@ const AddTodo = () => {
                 {() => (
                     <Form>
                         <Field type="text" name="attributes.title" placeholder="Title" />
-                        <Field type="text" name="attributes.body" placeholder="Body" />
+                        <Field type="text" name="attributes.body" placeholder="Details" />
 
                         <button type="submit">Add</button>
                     </Form>
