@@ -1,5 +1,22 @@
 # My Learning Journal
 
+## 04 Jan 20: Entry 101
+
+Attempted to edit to-dos on separate pages, but gave up because I couldn't 
+find an elegant way to pass existing values into the input fields. Might try 
+again some other time. Learning point:
+1. It's possible to use URLs to pass information to a React component (through 
+routing)
+
+Also, spent lots of time debugging 400 (Bad Request) errors for my `PUT` 
+request. While figuring out what *wasn't* buggy, I learnt:
+
+2. How Rails maps HTTP requests to controller actions (i.e. one reason why 
+`rails routes` is useful)
+3. The default actions provided for a Rails resource (i.e. why I don't need 
+to write my own create/update actions)
+4. What an X-CSRF-Token is and why it's used
+
 ## 30 Dec 19: Entry 4
 
 Tidying up mid-assignment submission. Realised I didn't properly design the 
