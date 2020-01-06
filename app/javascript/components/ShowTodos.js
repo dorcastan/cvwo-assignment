@@ -119,7 +119,7 @@ const ShowTodos = () => {
                                 key={todo.id}
                                 id={todo.id}
                                 title={todo.attributes.title}
-                                body={todo.attributes.body}
+                                body={todo.attributes.details}
                                 handleSubmit={(values) => handleSubmit(values)}
                                 handleCancel={() => toggleTodoBeingEditedStatus(todo.id)}
                             />
@@ -127,7 +127,7 @@ const ShowTodos = () => {
                             <Todo
                                 key={todo.id}
                                 title={todo.attributes.title}
-                                body={todo.attributes.body}
+                                body={todo.attributes.details}
                                 handleEdit={() => toggleTodoBeingEditedStatus(todo.id)}
                                 handleDelete={() => deleteTodo(todo.id)}
                             />

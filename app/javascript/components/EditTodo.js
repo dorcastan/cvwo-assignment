@@ -11,7 +11,7 @@ const EditTodo = (props) => {
                         type: 'todos',
                         attributes: {
                             title: props.title,
-                            body: props.body
+                            details: props.details
                         }
                     }}
                     onSubmit={props.handleSubmit}
@@ -19,7 +19,7 @@ const EditTodo = (props) => {
                     {() => (
                         <Form>
                             <Field type='text' name='attributes.title' placeholder='Title' />
-                            <Field type='text' name='attributes.body' placeholder='Details' />
+                            <Field type='text' name='attributes.details' placeholder='Details' />
 
                             <button type='submit'>Confirm</button>
                             <button type='button' onClick={props.handleCancel}>

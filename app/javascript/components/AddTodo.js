@@ -31,7 +31,7 @@ const AddTodo = () => {
                     break;
                 default:
                     alert('The To-Do could not be created. \n\n'.concat(
-                        `Title: ${values.attributes.title} \nBody: ${values.attributes.body}\n`
+                        `Title: ${values.attributes.title} \nBody: ${values.attributes.details}\n`
                     ))
                     break;
             }
@@ -47,7 +47,7 @@ const AddTodo = () => {
                     type: 'todos',
                     attributes: {
                         title: '',
-                        body: ''
+                        details: ''
                     }
                 }}
                 onSubmit={handleSubmit}
@@ -55,7 +55,7 @@ const AddTodo = () => {
                 {() => (
                     <Form>
                         <Field type="text" name="attributes.title" placeholder="Title" />
-                        <Field type="text" name="attributes.body" placeholder="Details" />
+                        <Field type="text" name="attributes.details" placeholder="Details" />
 
                         <button type="submit">Add</button>
                     </Form>

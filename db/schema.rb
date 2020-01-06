@@ -10,16 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_24_143122) do
+ActiveRecord::Schema.define(version: 2020_01_06_060704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "todos", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.text "info"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "todos", force: :cascade do |t|
+    t.string "title"
+    t.text "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tag_id"
+    t.index ["tag_id"], name: "index_todos_on_tag_id"
+  end
+
+  add_foreign_key "todos", "tags"
 end
