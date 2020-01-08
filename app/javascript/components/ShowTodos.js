@@ -5,7 +5,8 @@ const Todo = (props) => {
     return (
         <tr>
             <td>{props.title}</td>
-            <td>{props.body}</td>
+            <td>{props.details}</td>
+            <td>{props.tag}</td>
             <td>
                 <button onClick={props.handleEdit}>Edit</button>
                 <button onClick={props.handleDelete}>Delete</button>
@@ -68,46 +69,13 @@ const ShowTodos = () => {
         sendDeleteRequest();
     }
 
-    function handleSubmit(values) {
-        const index = values.id;
-        const sendPutRequest = async () => {
-            const csrfToken = document.querySelector('meta[name=csrf-token]').content;
-            const response = await fetch(`/api/todos/${index}`, {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/vnd.api+json',
-                    'X-CSRF-Token': csrfToken
-                },
-                body: JSON.stringify({ data: values })
-            });
-            switch (response.status) {
-                case 200: // OK
-                // fallthrough
-                case 204: // No Content (i.e. successfully deleted)
-                    toggleTodoBeingEditedStatus(index);
-                    updateTodos(); // TODO: update state array instead of fetching everything again
-                    break;
-                // TODO: case 201: // Resource created
-                // TODO: case 202: // Accepted (action has been queued)
-                case 400: // Bad Request
-                // fallthrough
-                case 404: // Not Found
-                // fallthrough
-                default:
-                    alert(`To-Do #${index} could not be edited. Please try again later.`);
-                    break;
-            }
-        };
-        sendPutRequest();
-    }
-
     return (
         <table>
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Details</th>
+                    <th>Tag</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -119,15 +87,17 @@ const ShowTodos = () => {
                                 key={todo.id}
                                 id={todo.id}
                                 title={todo.attributes.title}
-                                body={todo.attributes.details}
-                                handleSubmit={(values) => handleSubmit(values)}
-                                handleCancel={() => toggleTodoBeingEditedStatus(todo.id)}
+                                details={todo.attributes.details}
+                                tag={todo.attributes.tag}
+                                toggleBeingEditedStatus={() => toggleTodoBeingEditedStatus(todo.id)}
+                                refresh={updateTodos}
                             />
                         ) : (
                             <Todo
                                 key={todo.id}
                                 title={todo.attributes.title}
-                                body={todo.attributes.details}
+                                details={todo.attributes.details}
+                                tag={todo.attributes.tag}
                                 handleEdit={() => toggleTodoBeingEditedStatus(todo.id)}
                                 handleDelete={() => deleteTodo(todo.id)}
                             />
