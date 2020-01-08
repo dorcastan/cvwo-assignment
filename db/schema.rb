@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_01_06_060704) do
     t.text "details"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "tag_id"
+    t.bigint "tag_id", null: false
     t.index ["tag_id"], name: "index_todos_on_tag_id"
   end
 
