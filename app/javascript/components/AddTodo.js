@@ -21,19 +21,15 @@ const AddTodo = () => {
                 },
                 body: JSON.stringify({ data: values })
             });
-            switch (response.status) {
-                case 200: // OK
-                // fallthrough
-                case 204: // No Content
-                // fallthrough
-                case 201: // Created
-                    navigate('/');
-                    break;
-                default:
-                    alert('The To-Do could not be created. \n\n'.concat(
+            const successfulStatusCodes = [ 200, 201, 204 ];
+            if (successfulStatusCodes.includes(response.status)) {
+                navigate('/');
+            } else {
+                alert(
+                    'The To-Do could not be created. \n\n'.concat(
                         `Title: ${values.attributes.title} \nBody: ${values.attributes.details}\n`
-                    ))
-                    break;
+                    )
+                );
             }
         };
         requestTodos();
@@ -54,10 +50,10 @@ const AddTodo = () => {
             >
                 {() => (
                     <Form>
-                        <Field type="text" name="attributes.title" placeholder="Title" />
-                        <Field type="text" name="attributes.details" placeholder="Details" />
+                        <Field type='text' name='attributes.title' placeholder='Title' />
+                        <Field type='text' name='attributes.details' placeholder='Details' />
 
-                        <button type="submit">Add</button>
+                        <button type='submit'>Add</button>
                     </Form>
                 )}
             </Formik>
