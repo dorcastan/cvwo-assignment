@@ -2,67 +2,34 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
 const EditTodo = (props) => {
-    // TAGGING
     // TODO: clean up database - delete Tag if nothing else is pointing to it
+    // If original tag id !== new_tag_id, check whether orig_tag_id is linked to other todos
+    // If not, destroy original tag
+
+    function sendRequest(url, method, payload) {
+        const csrfToken = document.querySelector('meta[name=csrf-token]').content;
+        return fetch(url, {
+            method: method,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/vnd.api+json',
+                'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ data: payload })
+        });
+    }
 
     async function handleSubmit(values) {
         const index = values.id;
-        const tagName = values.attributes.tag ? values.attributes.tag : '';
-
-        const csrfToken = document.querySelector('meta[name=csrf-token]').content;
-
-        // FIXME: this function shouldn't be so long
-        const getTagId = async () => {
-            async function getExistingTag() {
-                const response = await fetch(`api/tags/?filter[name]=${tagName}`, {
-                    method: 'GET'
-                });
-                const { data } = await response.json();
-                return data;
-            }
-
-            async function createTag(csrfToken) {
-                const payload = { type: 'tags', attributes: { name: tagName } };
-                const response = await fetch(`/api/tags`, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/vnd.api+json',
-                        'X-CSRF-Token': csrfToken
-                    },
-                    body: JSON.stringify({ data: payload })
-                });
-                const successfulStatusCodes = [ 200, 201, 204 ];
-                if (!successfulStatusCodes.includes(response.status)) {
-                    throw 'Tag was not created';
-                }
-                const { data } = await response.json();
-                return data;
-            }
-
-            let tags = await getExistingTag(tagName); // should only contain 1 item (uniqueness constraint)
-            if (tags.length === 0) {
-                tags = [ await createTag(csrfToken) ]; // data should be an array
-            }
-            return tags[0].id;
-        };
 
         const putUpdatedTodo = async () => {
-            const response = await fetch(`/api/todos/${index}`, {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/vnd.api+json',
-                    'X-CSRF-Token': csrfToken
-                },
-                body: JSON.stringify({ data: actualValues })
-            });
+            const response = await sendRequest(`/api/todos/${index}`, 'PUT', values);
             switch (response.status) {
                 case 200: // OK
                 // fallthrough
                 case 204: // No Content
                     props.toggleBeingEditedStatus(index);
-                    props.refresh(); // TODO: update state array instead of fetching everything again
+                    props.refreshTodos(); // TODO: update state array instead of fetching everything again?
                     break;
                 // TODO: case 201: // Resource created
                 // TODO: case 202: // Accepted (action has been queued)
@@ -76,22 +43,6 @@ const EditTodo = (props) => {
                 default:
                     alert(`To-Do #${index} could not be edited. Please try again later.`);
                     break;
-            }
-        };
-
-        let tagId;
-        try {
-            tagId = await getTagId();
-        } catch (err) {
-            alert(err);
-            return;
-        }
-        const { tag, ...otherAttributes } = values.attributes;
-        const actualValues = {
-            ...values,
-            attributes: {
-                ...otherAttributes,
-                'tag-id': tagId
             }
         };
 

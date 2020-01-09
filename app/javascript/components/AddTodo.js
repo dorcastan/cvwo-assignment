@@ -43,7 +43,8 @@ const AddTodo = () => {
                     type: 'todos',
                     attributes: {
                         title: '',
-                        details: ''
+                        details: '',
+                        tag: 'General'
                     }
                 }}
                 onSubmit={handleSubmit}
@@ -52,6 +53,7 @@ const AddTodo = () => {
                     <Form>
                         <Field type='text' name='attributes.title' placeholder='Title' />
                         <Field type='text' name='attributes.details' placeholder='Details' />
+                        <Field type='text' name='attributes.tag' placeholder='Tag' />
 
                         <button type='submit'>Add</button>
                     </Form>
