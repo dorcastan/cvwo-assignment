@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import EditTodo from './EditTodo';
 
 const Todo = (props) => {
@@ -15,21 +15,9 @@ const Todo = (props) => {
     );
 };
 
-const ShowTodos = () => {
-    const [ todos, setTodos ] = useState([]);
-
-    const updateTodos = () => {
-        const requestTodos = async () => {
-            const response = await fetch('api/todos');
-            const { data } = await response.json();
-            setTodos(data.map((todo) => ({ ...todo, isBeingEdited: false })));
-        };
-        requestTodos();
-    };
-
-    useEffect(updateTodos, []);
-
+const ShowTodos = (props) => {
     function toggleTodoBeingEditedStatus(id) {
+        const todos = props.todos;
         const arrayIndex = todos.findIndex((todo) => todo.id === id);
         const oldTodo = todos[arrayIndex];
         const newTodo = {
@@ -38,7 +26,7 @@ const ShowTodos = () => {
         };
         const newTodos = [ ...todos ]; // make a copy so it will be re-rendered after setTodos
         newTodos.splice(arrayIndex, 1, newTodo);
-        setTodos(newTodos);
+        props.setTodos(newTodos);
     }
 
     function deleteTodo(index) {
@@ -56,7 +44,7 @@ const ShowTodos = () => {
                 case 200: // OK
                 // fallthrough
                 case 204: // No Content (i.e. successfully deleted)
-                    updateTodos(); // TODO: update state array instead of fetching everything again
+                    props.updateTodos(); // TODO: update state array instead of fetching everything again
                     break;
                 // TODO: case 202: // Accepted (action has been queued)
                 case 404: // Not Found
@@ -80,28 +68,34 @@ const ShowTodos = () => {
                 </tr>
             </thead>
             <tbody>
-                {todos.map(
-                    (todo) =>
-                        todo.isBeingEdited ? (
-                            <EditTodo
-                                key={todo.id}
-                                id={todo.id}
-                                title={todo.attributes.title}
-                                details={todo.attributes.details}
-                                tag={todo.attributes.tag}
-                                toggleBeingEditedStatus={() => toggleTodoBeingEditedStatus(todo.id)}
-                                refresh={updateTodos}
-                            />
-                        ) : (
-                            <Todo
-                                key={todo.id}
-                                title={todo.attributes.title}
-                                details={todo.attributes.details}
-                                tag={todo.attributes.tag}
-                                handleEdit={() => toggleTodoBeingEditedStatus(todo.id)}
-                                handleDelete={() => deleteTodo(todo.id)}
-                            />
-                        )
+                {props.todos.length ? (
+                    props.todos.map(
+                        (todo) =>
+                            todo.isBeingEdited ? (
+                                <EditTodo
+                                    key={todo.id}
+                                    id={todo.id}
+                                    title={todo.attributes.title}
+                                    details={todo.attributes.details}
+                                    tag={todo.attributes.tag}
+                                    toggleBeingEditedStatus={() => toggleTodoBeingEditedStatus(todo.id)}
+                                    refreshTodos={props.updateTodos}
+                                />
+                            ) : (
+                                <Todo
+                                    key={todo.id}
+                                    title={todo.attributes.title}
+                                    details={todo.attributes.details}
+                                    tag={todo.attributes.tag}
+                                    handleEdit={() => toggleTodoBeingEditedStatus(todo.id)}
+                                    handleDelete={() => deleteTodo(todo.id)}
+                                />
+                            )
+                    )
+                ) : (
+                    <tr>
+                        <td colSpan='4'>No To-Dos were found!</td>
+                    </tr>
                 )}
             </tbody>
         </table>

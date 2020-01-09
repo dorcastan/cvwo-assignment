@@ -1,7 +1,6 @@
 import { navigate } from '@reach/router';
-import { Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
-import ShowTodos from './ShowTodos';
 
 // Credit: AddTodo is adapted from
 // https://dev.to/able/building-and-consuming-a-json-api-with-rails-and-react-42p6
@@ -35,6 +34,9 @@ const AddTodo = () => {
         requestTodos();
     };
 
+    const validateTitle = (str) => (str && str.length !== 0 ? undefined : 'Title cannot be empty');
+    const validateTagName = (str) => (str && str.length !== 0 ? undefined : 'Tag cannot be empty');
+
     return (
         <div>
             <h2>Add a new To Do item</h2>
@@ -51,17 +53,24 @@ const AddTodo = () => {
             >
                 {() => (
                     <Form>
-                        <Field type='text' name='attributes.title' placeholder='Title' />
-                        <Field type='text' name='attributes.details' placeholder='Details' />
-                        <Field type='text' name='attributes.tag' placeholder='Tag' />
+                        <div>
+                            <Field type='text' name='attributes.title' placeholder='Title' validate={validateTitle} />
+                            <Field type='text' name='attributes.details' placeholder='Details' />
+                            <Field type='text' name='attributes.tag' placeholder='Tag' validate={validateTagName} />
+                            <button type='submit'>Add</button>
+                        </div>
 
-                        <button type='submit'>Add</button>
+                        {/* TODO: organise layout and prettify */}
+                        <div>
+                            <ErrorMessage name='attributes.title' />
+                            <ErrorMessage name='attributes.tag' />
+                        </div>
                     </Form>
                 )}
             </Formik>
 
-            <h2>Your current to-dos</h2>
-            <ShowTodos />
+            {/* <h2>Your current to-dos</h2>
+            <ShowTodos /> */}
         </div>
     );
 };
