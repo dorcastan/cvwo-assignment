@@ -4,58 +4,77 @@ import ShowTodos from './ShowTodos';
 
 const SearchTodos = () => {
     const [ todos, setTodos ] = useState([]);
+    const [ tags, setTags ] = useState([]);
     const [ searchString, setSearchString ] = useState('');
 
-    const updateTodos = () => {
+    // Updates to-dos and tags by pulling from the application API.
+    const updateData = () => {
         const requestTodos = async () => {
             const response = await fetch(`api/todos/${searchString}`);
             const { data } = await response.json();
             setTodos(data.map((todo) => ({ ...todo, isBeingEdited: false })));
         };
+        const requestTags = async () => {
+            const response = await fetch(`api/tags`);
+            const { data } = await response.json();
+            setTags(data);
+        };
         requestTodos();
+        requestTags();
     };
 
-    useEffect(updateTodos, [ searchString ]);
+    useEffect(updateData, [ searchString ]);
 
-    function findTodos(values) {
-        setSearchString(`?filter[${values.type}]=${values.query}`);
+    // Finds the id of the tag which has the given tag name.
+    function findTagId(tagName) {
+        const tag = tags.find((tag) => tag.attributes.name === tagName);
+        return tag ? tag.id : 0;
     }
 
-    function showAllTodos() {
+    // Sets the search string which is used for retrieving data.
+    function updateSearchString(values) {
+        const query = values.type === 'tag' ? findTagId(values.query) : values.query;
+        setSearchString(`?filter[${values.type}]=${query}`);
+    }
+
+    // Sets the search string to the default value.
+    function resetSearchString() {
         setSearchString('');
     }
 
     return (
         <div>
-            <h2>Search Your To-Dos</h2>
-            <Formik
-                initialValues={{
-                    query: 'Enter search query',
-                    type: 'title'
-                }}
-                onSubmit={findTodos}
-            >
-                <Form>
-                    <div>
-                        <Field type='search' name='query' />
-                        <button type='submit'>Search</button>
-                    </div>
-                    <div>
-                        <Field type='radio' name='type' id='title' value='title' />
-                        <label htmlFor='title'>Title</label>
-                        <Field type='radio' name='type' id='details' value='details' />
-                        <label htmlFor='details'>Details</label>
-                        {/* <Field type='radio' name='type' id='tag' value='tag' />
-                        <label htmlFor='tag'>Tag</label> */}
-                    </div>
-                </Form>
-            </Formik>
-
-            <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateTodos} query={searchString} />
+            <h2>Search your To-Dos</h2>
+            <div>
+                <Formik
+                    initialValues={{
+                        query: 'Enter search query',
+                        type: 'title'
+                    }}
+                    onSubmit={updateSearchString}
+                >
+                    <Form>
+                        <div>
+                            <Field type='search' name='query' />
+                            <button type='submit'>Search</button>
+                        </div>
+                        <div>
+                            <Field type='radio' name='type' id='title' value='title' />
+                            <label htmlFor='title'>Title</label>
+                            <Field type='radio' name='type' id='details' value='details' />
+                            <label htmlFor='details'>Details</label>
+                            <Field type='radio' name='type' id='tag' value='tag' />
+                            <label htmlFor='tag'>Tag</label>
+                        </div>
+                    </Form>
+                </Formik>
+            </div>
 
             <div>
-                <button onClick={showAllTodos}>Show all</button>
+                <button onClick={resetSearchString}>Show all</button>
             </div>
+
+            <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
         </div>
     );
 };
