@@ -1,6 +1,7 @@
 import React from 'react';
 import EditTodo from './EditTodo';
 
+// Renders a table row with details from props. Used in ShowTodos.
 const Todo = (props) => {
     return (
         <tr>
@@ -15,7 +16,10 @@ const Todo = (props) => {
     );
 };
 
+// Renders a table of to-dos. Each table row displays either the to-do information
+// or a form to edit the to-do.
 const ShowTodos = (props) => {
+    // Toggles the isBeingEdited property of the todo with the given id.
     function toggleTodoBeingEditedStatus(id) {
         const todos = props.todos;
         const arrayIndex = todos.findIndex((todo) => todo.id === id);
@@ -29,10 +33,11 @@ const ShowTodos = (props) => {
         props.setTodos(newTodos);
     }
 
-    function deleteTodo(index) {
+    // Sends a request to the API to delete the specified to-do.
+    function deleteTodo(id) {
         const sendDeleteRequest = async () => {
             const csrfToken = document.querySelector('meta[name=csrf-token]').content;
-            const response = await fetch(`/api/todos/${index}`, {
+            const response = await fetch(`/api/todos/${id}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -44,13 +49,13 @@ const ShowTodos = (props) => {
                 case 200: // OK
                 // fallthrough
                 case 204: // No Content (i.e. successfully deleted)
-                    props.updateTodos(); // TODO: update state array instead of fetching everything again
+                    props.updateTodos();
                     break;
                 // TODO: case 202: // Accepted (action has been queued)
                 case 404: // Not Found
                 // fallthrough
                 default:
-                    alert(`To-Do #${index} could not be deleted. Please try again later.`);
+                    alert(`To-Do #${id} could not be deleted. Please try again later.`);
                     break;
             }
         };

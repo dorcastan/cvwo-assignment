@@ -5,6 +5,7 @@ import ShowTodos from './ShowTodos';
 const TodoList = () => {
     const [ todos, setTodos ] = useState([]);
 
+    // Updates the to-dos array by pulling from the application API.
     const updateTodos = () => {
         const requestTodos = async () => {
             const response = await fetch('api/todos');
@@ -20,7 +21,12 @@ const TodoList = () => {
         <div>
             <h1>To-Dos</h1>
             <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
-            <Link to='/add'>Add a new to-do</Link>
+            <p>
+                <Link to='/add'>Add a new to-do</Link>
+            </p>
+            <p>
+                <Link to='/search'>Search for to-dos</Link>
+            </p>
         </div>
     );
 };

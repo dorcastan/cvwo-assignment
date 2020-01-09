@@ -1,11 +1,15 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
+// Renders a table row that contains a form with fields to edit a to-do's title,
+// details, and/or tag.
 const EditTodo = (props) => {
     // TODO: clean up database - delete Tag if nothing else is pointing to it
     // If original tag id !== new_tag_id, check whether orig_tag_id is linked to other todos
     // If not, destroy original tag
 
+    // Sends HTTP requests with CSRF verification using the given URL, HTTP
+    // method, and (optional) payload.
     function sendRequest(url, method, payload) {
         const csrfToken = document.querySelector('meta[name=csrf-token]').content;
         return fetch(url, {
@@ -15,10 +19,11 @@ const EditTodo = (props) => {
                 'Content-Type': 'application/vnd.api+json',
                 'X-CSRF-Token': csrfToken
             },
-            body: JSON.stringify({ data: payload })
+            body: payload ? JSON.stringify({ data: payload }) : null
         });
     }
 
+    // Sends the given data to the To-Dos API and checks for a successful response.
     async function handleSubmit(values) {
         const index = values.id;
 
@@ -64,7 +69,7 @@ const EditTodo = (props) => {
 
     return (
         <tr>
-            <td colSpan='3'>
+            <td colSpan='4'>
                 <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                     {() => (
                         <Form>
