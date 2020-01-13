@@ -15,5 +15,15 @@ class Api::TodoResource < JSONAPI::Resource
         end
     end
 
-    filters :title, :details, :tag
+    filter :title, apply: -> (records, value, _options) {
+        @value_string = value[0]
+        records.where("title ILIKE ?", "%#{@value_string}%")
+    }
+
+    filter :details, apply: -> (records, value, _options) {
+        @value_string = value[0]
+        records.where("details ILIKE ?", "%#{@value_string}%")
+    }
+    
+    filter :tag # Note: tags are filtered by tag_id
 end

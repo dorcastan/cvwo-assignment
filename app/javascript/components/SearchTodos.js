@@ -8,6 +8,7 @@ const SearchTodos = () => {
     const [ searchString, setSearchString ] = useState('');
 
     // Updates to-dos and tags by pulling from the application API.
+    // Tag names are saved as lower-case.
     const updateData = () => {
         const requestTodos = async () => {
             const response = await fetch(`api/todos/${searchString}`);
@@ -17,7 +18,11 @@ const SearchTodos = () => {
         const requestTags = async () => {
             const response = await fetch(`api/tags`);
             const { data } = await response.json();
-            setTags(data);
+            const lowerCaseTags = data.map((tag) => ({
+                id: tag.id,
+                name: tag.attributes.name.toLowerCase()
+            }));
+            setTags(lowerCaseTags);
         };
         requestTodos();
         requestTags();
@@ -25,9 +30,9 @@ const SearchTodos = () => {
 
     useEffect(updateData, [ searchString ]);
 
-    // Finds the id of the tag which has the given tag name.
+    // Finds the id of the tag which has the given tag name (case insensitive).
     function findTagId(tagName) {
-        const tag = tags.find((tag) => tag.attributes.name === tagName);
+        const tag = tags.find((tag) => tag.name === tagName.toLowerCase());
         return tag ? tag.id : 0;
     }
 
