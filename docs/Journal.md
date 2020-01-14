@@ -1,5 +1,47 @@
 # My Learning Journal
 
+## 13 Jan 20: Entry 0xA
+
+Successfully enhanced search functionality!
+
+* It's possible to construct SQL queries through Rails from JSONAPI::Resources.
+
+## 09 Jan 20: Entry 1001
+
+Managed a basic search, and tried to do a (very small) bit of optimisation.
+Still trying to figure out a way to do partial search.
+
+Learning points:
+1. Monitor SQL queries through the console to see database queries and figure 
+out how the application is working
+
+## 08 Jan 20: Entry 1000
+
+Experimented with different combinations of resource and route configurations. 
+Considered custom controller actions too, but concluded that they're not the 
+preferred course of action (for RESTful interfaces).
+
+Eventually decided to just try working through the existing (basic) API for 
+to-dos and tags, although it will be highly inefficient. Finally got tagging 
+up and running!
+
+Learning points (besides the above):
+1. How to make data from different tables accessible through the API 
+(`JSONAPI::Resources` *is* the server API layer)
+
+Question:
+1. So much data validation that seems to do the same thing – where should it be?
+
+## 07 Jan 20: Entry 111
+
+* Chapters 7 and 11 (Query Interface, Routing)
+
+## 06 Jan 20: Entry 110
+
+* Layers: Database --> Model --> Controller --> API (Routes)
+* Database migrations
+* Read through Chapters 2 - 6 (Basics, Migrations, Validations, Callbacks, Associations)
+
 ## 04 Jan 20: Entry 101
 
 Attempted to edit to-dos on separate pages, but gave up because I couldn't 
