@@ -19,11 +19,7 @@ const SearchTodos = () => {
         const requestTags = async () => {
             const response = await fetch(`api/tags`);
             const { data } = await response.json();
-            const lowerCaseTags = data.map((tag) => ({
-                id: tag.id,
-                name: tag.attributes.name.toLowerCase()
-            }));
-            setTags(lowerCaseTags);
+            setTags(data);
         };
         requestTodos();
         requestTags();
@@ -31,10 +27,13 @@ const SearchTodos = () => {
 
     useEffect(updateData, [ searchString ]);
 
-    // Finds the id of the tag which has the given tag name (case insensitive).
-    function findTagId(tagName) {
-        const tag = tags.find((tag) => tag.name === tagName.toLowerCase());
-        return tag ? tag.id : 0;
+    // Returns a string containing the id(s) of tag(s) which contain the given
+    // partial tag name. Tag matching is case insensitive.
+    function findTagId(partialTagName) {
+        const regExp = new RegExp('.*' + partialTagName + '.*', 'i');
+        const selectedTags = tags.filter((tag) => tag.attributes.name.match(regExp));
+        const tagIds = selectedTags.reduce((accumulator, currentValue) => accumulator + ',' + currentValue.id, '');
+        return tagIds ? tagIds : 0;
     }
 
     // Sets the search string which is used for retrieving data.
@@ -55,7 +54,7 @@ const SearchTodos = () => {
                 <Formik
                     initialValues={{
                         query: 'Enter search query',
-                        type: 'title'
+                        type: 'tag'
                     }}
                     onSubmit={updateSearchString}
                 >
