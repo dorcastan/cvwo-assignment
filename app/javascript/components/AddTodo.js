@@ -1,4 +1,4 @@
-import { navigate } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
@@ -71,6 +71,9 @@ const AddTodo = () => {
 
             {/* <h2>Your current to-dos</h2>
             <ShowTodos /> */}
+            <p>
+                <Link to='/'>Home</Link>
+            </p>
         </div>
     );
 };

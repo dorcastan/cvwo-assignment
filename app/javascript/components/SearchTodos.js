@@ -1,3 +1,4 @@
+import { Link } from '@reach/router';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import ShowTodos from './ShowTodos';
@@ -80,6 +81,10 @@ const SearchTodos = () => {
             </div>
 
             <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
+
+            <p>
+                <Link to='/'>Home</Link>
+            </p>
         </div>
     );
 };
