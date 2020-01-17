@@ -1,6 +1,7 @@
-import { Link } from '@reach/router';
+import { Button, Container, Paper, Typography } from '@material-ui/core';
+import { Link as RouterLink } from '@reach/router';
 import React, { useEffect, useState } from 'react';
-import ShowTodos from './ShowTodos';
+import TodosTable from './TodosTable';
 
 const TodoList = () => {
     const [ todos, setTodos ] = useState([]);
@@ -18,16 +19,22 @@ const TodoList = () => {
     useEffect(updateTodos, []);
 
     return (
-        <div>
-            <h1>To-Dos</h1>
-            <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
-            <p>
-                <Link to='/add'>Add a new to-do</Link>
-            </p>
-            <p>
-                <Link to='/search'>Search for to-dos</Link>
-            </p>
-        </div>
+        <Container>
+            <Typography variant='h2' component='h1'>
+                To-Dos
+            </Typography>
+
+            <Button component={RouterLink} to='/add' variant='contained' color='primary'>
+                Add a new to-do
+            </Button>
+            <Button component={RouterLink} to='/search' variant='contained' color='secondary'>
+                Search for to-dos
+            </Button>
+
+            <Paper>
+                <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
+            </Paper>
+        </Container>
     );
 };
 

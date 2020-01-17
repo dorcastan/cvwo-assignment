@@ -1,4 +1,5 @@
-import { Link, navigate } from '@reach/router';
+import { Button, Container, Grid, TextField, Typography } from '@material-ui/core';
+import { Link as RouterLink, navigate } from '@reach/router';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
@@ -38,43 +39,90 @@ const AddTodo = () => {
     const validateTagName = (str) => (str && str.length !== 0 ? undefined : 'Tag cannot be empty');
 
     return (
-        <div>
-            <h2>Add a new To Do item</h2>
-            <Formik
-                initialValues={{
-                    type: 'todos',
-                    attributes: {
-                        title: '',
-                        details: '',
-                        tag: 'General'
-                    }
-                }}
-                onSubmit={handleSubmit}
-            >
-                {() => (
-                    <Form>
-                        <div>
-                            <Field type='text' name='attributes.title' placeholder='Title' validate={validateTitle} />
-                            <Field type='text' name='attributes.details' placeholder='Details' />
-                            <Field type='text' name='attributes.tag' placeholder='Tag' validate={validateTagName} />
-                            <button type='submit'>Add</button>
-                        </div>
+        <Container>
+            <Grid container direction='column' spacing={2}>
+                <Grid item>
+                    <Typography variant='h2'>New To-Do</Typography>
+                </Grid>
 
-                        {/* TODO: organise layout and prettify */}
-                        <div>
-                            <ErrorMessage name='attributes.title' />
-                            <ErrorMessage name='attributes.tag' />
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+                <Grid item>
+                    <Formik
+                        initialValues={{
+                            type: 'todos',
+                            attributes: {
+                                title: '',
+                                details: '',
+                                tag: 'General'
+                            }
+                        }}
+                        onSubmit={handleSubmit}
+                    >
+                        {() => (
+                            <Form>
+                                <Grid container spacing={1} direction='column'>
+                                    <Grid item xs>
+                                        <Field
+                                            as={TextField}
+                                            type='text'
+                                            name='attributes.title'
+                                            placeholder='Title'
+                                            validate={validateTitle}
+                                            margin='normal'
+                                            fullWidth
+                                            color='primary'
+                                        />
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Field
+                                            as={TextField}
+                                            type='text'
+                                            name='attributes.details'
+                                            placeholder='Details'
+                                            margin='normal'
+                                            fullWidth
+                                            color='primary'
+                                        />
+                                    </Grid>
+                                    <Grid item container justify='space-between' spacing={3}>
+                                        <Grid item>
+                                            <Field
+                                                as={TextField}
+                                                type='text'
+                                                name='attributes.tag'
+                                                placeholder='Tag'
+                                                validate={validateTagName}
+                                                margin='normal'
+                                                fullWidth
+                                                color='primary'
+                                            />
+                                        </Grid>
+                                        <Grid item xs={1}>
+                                            <Button type='submit' variant='contained' color='primary'>
+                                                Add
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
 
-            {/* <h2>Your current to-dos</h2>
+                                {/* TODO: organise layout and prettify */}
+                                <div>
+                                    <ErrorMessage name='attributes.title' />
+                                    <ErrorMessage name='attributes.tag' />
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                </Grid>
+
+                {/* <h2>Your current to-dos</h2>
             <ShowTodos /> */}
-            <p>
-                <Link to='/'>Home</Link>
-            </p>
-        </div>
+                <Grid item>
+                    <Button component={RouterLink} to='/' variant='outlined'>
+                        Home
+                    </Button>
+                </Grid>
+            </Grid>
+        </Container>
     );
 };
 

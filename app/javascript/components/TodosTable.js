@@ -1,24 +1,31 @@
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
-import EditTodo from './EditTodo';
+import EditTodoRow from './EditTodoRow';
 
-// Renders a table row with details from props. Used in ShowTodos.
-const Todo = (props) => {
+// Renders a table row with details from props. Used in TodosTable.
+const TodoRow = (props) => {
     return (
-        <tr>
-            <td>{props.title}</td>
-            <td>{props.details}</td>
-            <td>{props.tag}</td>
-            <td>
-                <button onClick={props.handleEdit}>Edit</button>
-                <button onClick={props.handleDelete}>Delete</button>
-            </td>
-        </tr>
+        <TableRow>
+            <TableCell>{props.title}</TableCell>
+            <TableCell>{props.details}</TableCell>
+            <TableCell>{props.tag}</TableCell>
+            <TableCell>
+                <ButtonGroup>
+                    <Button onClick={props.handleEdit} color='primary'>
+                        Edit
+                    </Button>
+                    <Button onClick={props.handleDelete} color='secondary'>
+                        Delete
+                    </Button>
+                </ButtonGroup>
+            </TableCell>
+        </TableRow>
     );
 };
 
 // Renders a table of to-dos. Each table row displays either the to-do information
 // or a form to edit the to-do.
-const ShowTodos = (props) => {
+const TodosTable = (props) => {
     // Toggles the isBeingEdited property of the todo with the given id.
     function toggleTodoBeingEditedStatus(id) {
         const todos = props.todos;
@@ -63,21 +70,21 @@ const ShowTodos = (props) => {
     }
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Details</th>
-                    <th>Tag</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Details</TableCell>
+                    <TableCell>Tag</TableCell>
+                    <TableCell>Actions</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
                 {props.todos.length ? (
                     props.todos.map(
                         (todo) =>
                             todo.isBeingEdited ? (
-                                <EditTodo
+                                <EditTodoRow
                                     key={todo.id}
                                     id={todo.id}
                                     title={todo.attributes.title}
@@ -87,7 +94,7 @@ const ShowTodos = (props) => {
                                     refreshTodos={props.updateTodos}
                                 />
                             ) : (
-                                <Todo
+                                <TodoRow
                                     key={todo.id}
                                     title={todo.attributes.title}
                                     details={todo.attributes.details}
@@ -98,13 +105,13 @@ const ShowTodos = (props) => {
                             )
                     )
                 ) : (
-                    <tr>
-                        <td colSpan='4'>No To-Dos were found!</td>
-                    </tr>
+                    <TableRow>
+                        <TableCell colSpan='4'>No To-Dos were found!</TableCell>
+                    </TableRow>
                 )}
-            </tbody>
-        </table>
+            </TableBody>
+        </Table>
     );
 };
 
-export default ShowTodos;
+export default TodosTable;

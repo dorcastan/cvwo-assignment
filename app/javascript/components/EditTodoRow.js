@@ -1,9 +1,10 @@
+import { Button, ButtonGroup, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
 // Renders a table row that contains a form with fields to edit a to-do's title,
 // details, and/or tag.
-const EditTodo = (props) => {
+const EditTodoRow = (props) => {
     // TODO: clean up database - delete Tag if nothing else is pointing to it
     // If original tag id !== new_tag_id, check whether orig_tag_id is linked to other todos
     // If not, destroy original tag
@@ -68,28 +69,55 @@ const EditTodo = (props) => {
     const validateTagName = (str) => (str && str.length !== 0 ? undefined : 'Tag cannot be empty');
 
     return (
-        <tr>
-            <td colSpan='4'>
+        <TableRow>
+            <TableCell colSpan='4'>
                 <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                     {() => (
                         <Form>
-                            <div>
-                                <Field
-                                    type='text'
-                                    name='attributes.title'
-                                    placeholder='Title'
-                                    validate={validateTitle}
-                                />
-                                <Field type='text' name='attributes.details' placeholder='Details' />
-                                <Field type='text' name='attributes.tag' placeholder='Tag' validate={validateTagName} />
+                            <Grid container spacing={2} justify='space-between'>
+                                <Grid item xs>
+                                    <Field
+                                        as={TextField}
+                                        type='text'
+                                        name='attributes.title'
+                                        placeholder='Title'
+                                        validate={validateTitle}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs>
+                                    <Field
+                                        as={TextField}
+                                        type='text'
+                                        name='attributes.details'
+                                        placeholder='Details'
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Field
+                                        as={TextField}
+                                        type='text'
+                                        name='attributes.tag'
+                                        placeholder='Tag'
+                                        validate={validateTagName}
+                                        fullWidth
+                                    />
+                                </Grid>
 
-                                <button type='submit'>Confirm</button>
-                                <button type='button' onClick={props.toggleBeingEditedStatus}>
-                                    Cancel
-                                </button>
-                            </div>
+                                <Grid item xs={3}>
+                                    <ButtonGroup>
+                                        <Button type='submit' color='primary'>
+                                            Confirm
+                                        </Button>
+                                        <Button type='button' onClick={props.toggleBeingEditedStatus}>
+                                            Cancel
+                                        </Button>
+                                    </ButtonGroup>
+                                </Grid>
+                            </Grid>
 
-                            {/* TODO: organise layout and prettify */}
+                            {/* TODO: Use Yup instead of field-level validation */}
                             <div>
                                 <ErrorMessage name='attributes.title' />
                                 <ErrorMessage name='attributes.tag' />
@@ -97,9 +125,9 @@ const EditTodo = (props) => {
                         </Form>
                     )}
                 </Formik>
-            </td>
-        </tr>
+            </TableCell>
+        </TableRow>
     );
 };
 
-export default EditTodo;
+export default EditTodoRow;

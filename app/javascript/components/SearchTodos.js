@@ -1,7 +1,18 @@
+import {
+    Button,
+    Container,
+    FormControlLabel,
+    Grid,
+    Paper,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography
+} from '@material-ui/core';
 import { Link } from '@reach/router';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import ShowTodos from './ShowTodos';
+import TodosTable from './TodosTable';
 
 const SearchTodos = () => {
     const [ todos, setTodos ] = useState([]);
@@ -30,6 +41,7 @@ const SearchTodos = () => {
     // Returns a string containing the id(s) of tag(s) which contain the given
     // partial tag name. Tag matching is case insensitive.
     function findTagId(partialTagName) {
+        // TODO: START HERE: clean before searching
         const regExp = new RegExp('.*' + partialTagName + '.*', 'i');
         const selectedTags = tags.filter((tag) => tag.attributes.name.match(regExp));
         const tagIds = selectedTags.reduce((accumulator, currentValue) => accumulator + ',' + currentValue.id, '');
@@ -48,43 +60,77 @@ const SearchTodos = () => {
     }
 
     return (
-        <div>
-            <h2>Search your To-Dos</h2>
+        <Container>
+            {/* <Paper> */}
+            <Typography variant='h2'>Search</Typography>
+            {/* </Paper> */}
+
             <div>
                 <Formik
                     initialValues={{
-                        query: 'Enter search query',
-                        type: 'tag'
+                        query: '',
+                        type: 'title'
                     }}
                     onSubmit={updateSearchString}
                 >
                     <Form>
-                        <div>
-                            <Field type='search' name='query' />
-                            <button type='submit'>Search</button>
-                        </div>
-                        <div>
-                            <Field type='radio' name='type' id='title' value='title' />
-                            <label htmlFor='title'>Title</label>
-                            <Field type='radio' name='type' id='details' value='details' />
-                            <label htmlFor='details'>Details</label>
-                            <Field type='radio' name='type' id='tag' value='tag' />
-                            <label htmlFor='tag'>Tag</label>
-                        </div>
+                        <Grid container alignItems='center' justify='space-between' spacing={2}>
+                            <Grid item xs>
+                                <Field
+                                    as={TextField}
+                                    type='search'
+                                    name='query'
+                                    placeholder='What are you looking for?'
+                                    fullWidth
+                                    color='secondary'
+                                />
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Button type='submit' variant='contained' color='secondary'>
+                                    Search
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Grid container alignItems='center' justify='space-between' spacing={2}>
+                            {/* <FormLabel component='legend'>Location</FormLabel> */}
+                            <Grid item>
+                                <RadioGroup row={true}>
+                                    <FormControlLabel
+                                        value='title'
+                                        control={<Field as={Radio} type='radio' name='type' value='title' />}
+                                        label='Title'
+                                    />
+                                    <FormControlLabel
+                                        value='details'
+                                        control={<Field as={Radio} type='radio' name='type' value='details' />}
+                                        label='Details'
+                                    />
+                                    <FormControlLabel
+                                        value='tag'
+                                        control={<Field as={Radio} type='radio' name='type' value='tag' />}
+                                        label='Tag'
+                                    />
+                                </RadioGroup>
+                            </Grid>
+                            <Grid item />
+                        </Grid>
                     </Form>
                 </Formik>
             </div>
 
-            <div>
-                <button onClick={resetSearchString}>Show all</button>
-            </div>
+            {/* TODO: align to right side of screen */}
+            <Button onClick={resetSearchString} variant='outlined'>
+                Show all
+            </Button>
 
-            <ShowTodos todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
+            <Paper>
+                <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
+            </Paper>
 
-            <p>
-                <Link to='/'>Home</Link>
-            </p>
-        </div>
+            <Button component={Link} to='/' variant='outlined'>
+                Home
+            </Button>
+        </Container>
     );
 };
 
