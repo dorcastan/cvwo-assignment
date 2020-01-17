@@ -1,7 +1,9 @@
-import { Button, Container, Grid, TextField, Typography } from '@material-ui/core';
-import { Link as RouterLink, navigate } from '@reach/router';
+import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
+import { navigate } from '@reach/router';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import AppHeader from './AppHeader';
 
 // Credit: AddTodo is adapted from
 // https://dev.to/able/building-and-consuming-a-json-api-with-rails-and-react-42p6
@@ -43,88 +45,82 @@ const AddTodo = () => {
 
     return (
         <Container>
-            <Grid container direction='column' spacing={2}>
-                <Grid item>
-                    <Typography variant='h2'>New To-Do</Typography>
-                </Grid>
+            <AppHeader />
 
-                <Grid item>
-                    <Formik
-                        initialValues={{
-                            type: 'todos',
-                            attributes: {
-                                title: '',
-                                details: '',
-                                tag: 'General'
-                            }
-                        }}
-                        onSubmit={handleSubmit}
-                    >
-                        {() => (
-                            <Form>
-                                <Grid container spacing={1} direction='column'>
-                                    <Grid item xs>
+            <Box mb={3}>
+                <Typography variant='h3' color='primary'>
+                    Add a To-Do
+                </Typography>
+            </Box>
+
+            <Box px={2}>
+                <Formik
+                    initialValues={{
+                        type: 'todos',
+                        attributes: {
+                            title: '',
+                            details: '',
+                            tag: 'General'
+                        }
+                    }}
+                    onSubmit={handleSubmit}
+                >
+                    {() => (
+                        <Form>
+                            <Grid container direction='column' spacing={1}>
+                                <Grid item xs>
+                                    <Field
+                                        as={TextField}
+                                        type='text'
+                                        name='attributes.title'
+                                        placeholder='Title'
+                                        validate={validateTitle}
+                                        fullWidth
+                                        color='primary'
+                                    />
+                                </Grid>
+                                <Grid item xs>
+                                    <Field
+                                        as={TextField}
+                                        type='text'
+                                        name='attributes.details'
+                                        placeholder='Details'
+                                        fullWidth
+                                        color='primary'
+                                    />
+                                </Grid>
+                                <Grid item container justify='space-between' alignItems='center' spacing={3}>
+                                    <Grid item>
                                         <Field
                                             as={TextField}
                                             type='text'
-                                            name='attributes.title'
-                                            placeholder='Title'
-                                            validate={validateTitle}
-                                            margin='normal'
+                                            name='attributes.tag'
+                                            placeholder='Tag'
+                                            validate={validateTagName}
                                             fullWidth
                                             color='primary'
                                         />
                                     </Grid>
-                                    <Grid item xs>
-                                        <Field
-                                            as={TextField}
-                                            type='text'
-                                            name='attributes.details'
-                                            placeholder='Details'
-                                            margin='normal'
-                                            fullWidth
-                                            color='primary'
-                                        />
-                                    </Grid>
-                                    <Grid item container justify='space-between' spacing={3}>
-                                        <Grid item>
-                                            <Field
-                                                as={TextField}
-                                                type='text'
-                                                name='attributes.tag'
-                                                placeholder='Tag'
-                                                validate={validateTagName}
-                                                margin='normal'
-                                                fullWidth
-                                                color='primary'
-                                            />
-                                        </Grid>
-                                        <Grid item xs={1}>
-                                            <Button type='submit' variant='contained' color='primary'>
-                                                Add
-                                            </Button>
-                                        </Grid>
+                                    <Grid item xs={2} align='right'>
+                                        <Button type='submit' variant='contained' color='primary' startIcon={<Add />}>
+                                            Add
+                                        </Button>
                                     </Grid>
                                 </Grid>
+                            </Grid>
 
-                                {/* TODO: organise layout and prettify */}
-                                <div>
-                                    <ErrorMessage name='attributes.title' />
-                                    <ErrorMessage name='attributes.tag' />
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-                </Grid>
+                            {/* TODO: organise layout and prettify */}
+                            <div>
+                                <ErrorMessage name='attributes.title' />
+                                <ErrorMessage name='attributes.tag' />
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </Box>
 
-                {/* <h2>Your current to-dos</h2>
+            {/* <h2>Your current to-dos</h2>
             <ShowTodos /> */}
-                <Grid item>
-                    <Button component={RouterLink} to='/' variant='outlined'>
-                        Home
-                    </Button>
-                </Grid>
-            </Grid>
         </Container>
     );
 };

@@ -1,6 +1,6 @@
-import { Button, Container, Paper, Typography } from '@material-ui/core';
-import { Link as RouterLink } from '@reach/router';
+import { Box, Container, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
 
 const TodoList = () => {
@@ -20,20 +20,15 @@ const TodoList = () => {
 
     return (
         <Container>
-            <Typography variant='h2' component='h1'>
-                To-Dos
-            </Typography>
+            <AppHeader />
 
-            <Button component={RouterLink} to='/add' variant='contained' color='primary'>
-                Add a new to-do
-            </Button>
-            <Button component={RouterLink} to='/search' variant='contained' color='secondary'>
-                Search for to-dos
-            </Button>
+            <Typography variant='h3'>Home</Typography>
 
-            <Paper>
-                <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
-            </Paper>
+            <Box my={2}>
+                <Paper elevation={1}>
+                    <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
+                </Paper>
+            </Box>
         </Container>
     );
 };

@@ -1,4 +1,5 @@
 import { Button, ButtonGroup, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
+import { CloseOutlined, DoneOutlined } from '@material-ui/icons';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
@@ -109,11 +110,15 @@ const EditTodoRow = (props) => {
                                 </Grid>
 
                                 <Grid item xs={3}>
-                                    <ButtonGroup>
-                                        <Button type='submit' color='primary'>
+                                    <ButtonGroup size='small'>
+                                        <Button type='submit' color='primary' startIcon={<DoneOutlined />}>
                                             Confirm
                                         </Button>
-                                        <Button type='button' onClick={props.toggleBeingEditedStatus}>
+                                        <Button
+                                            type='button'
+                                            onClick={props.toggleBeingEditedStatus}
+                                            startIcon={<CloseOutlined />}
+                                        >
                                             Cancel
                                         </Button>
                                     </ButtonGroup>

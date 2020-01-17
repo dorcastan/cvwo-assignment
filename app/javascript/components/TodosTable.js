@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import { DeleteOutlined, EditOutlined } from '@material-ui/icons';
 import React from 'react';
 import EditTodoRow from './EditTodoRow';
 
@@ -10,11 +11,11 @@ const TodoRow = (props) => {
             <TableCell>{props.details}</TableCell>
             <TableCell>{props.tag}</TableCell>
             <TableCell>
-                <ButtonGroup>
-                    <Button onClick={props.handleEdit} color='primary'>
+                <ButtonGroup size='small'>
+                    <Button onClick={props.handleEdit} color='primary' startIcon={<EditOutlined />}>
                         Edit
                     </Button>
-                    <Button onClick={props.handleDelete} color='secondary'>
+                    <Button onClick={props.handleDelete} color='secondary' startIcon={<DeleteOutlined />}>
                         Delete
                     </Button>
                 </ButtonGroup>
@@ -69,14 +70,17 @@ const TodosTable = (props) => {
         sendDeleteRequest();
     }
 
+    const tableHeaders = [ 'Title', 'Details', 'Tag', 'Actions' ];
+
     return (
         <Table>
             <TableHead>
-                <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Details</TableCell>
-                    <TableCell>Tag</TableCell>
-                    <TableCell>Actions</TableCell>
+                <TableRow color='primary'>
+                    {tableHeaders.map((header, id) => (
+                        <TableCell key={id}>
+                            <Typography variant='subtitle1'>{header}</Typography>
+                        </TableCell>
+                    ))}
                 </TableRow>
             </TableHead>
             <TableBody>

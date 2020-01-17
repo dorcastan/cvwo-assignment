@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Container,
     FormControlLabel,
@@ -9,9 +10,10 @@ import {
     TextField,
     Typography
 } from '@material-ui/core';
-import { Link } from '@reach/router';
+import { List, Search } from '@material-ui/icons';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
+import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
 
 const SearchTodos = () => {
@@ -62,11 +64,13 @@ const SearchTodos = () => {
 
     return (
         <Container>
-            {/* <Paper> */}
-            <Typography variant='h2'>Search</Typography>
-            {/* </Paper> */}
+            <AppHeader />
 
-            <div>
+            <Typography variant='h3' color='secondary'>
+                Search
+            </Typography>
+
+            <Box mt={1}>
                 <Formik
                     initialValues={{
                         query: '',
@@ -75,7 +79,7 @@ const SearchTodos = () => {
                     onSubmit={updateSearchString}
                 >
                     <Form>
-                        <Grid container alignItems='center' justify='space-between' spacing={2}>
+                        <Grid container alignItems='center' justify='flex-start'>
                             <Grid item xs>
                                 <Field
                                     as={TextField}
@@ -86,15 +90,15 @@ const SearchTodos = () => {
                                     color='secondary'
                                 />
                             </Grid>
-                            <Grid item xs={1}>
-                                <Button type='submit' variant='contained' color='secondary'>
+                            <Grid item xs={2} align='right'>
+                                <Button type='submit' variant='contained' color='secondary' startIcon={<Search />}>
                                     Search
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Grid container alignItems='center' justify='space-between' spacing={2}>
+                        <Grid container alignItems='center' justify='flex-start' spacing={2}>
                             {/* <FormLabel component='legend'>Location</FormLabel> */}
-                            <Grid item>
+                            <Grid item xs>
                                 <RadioGroup row={true}>
                                     <FormControlLabel
                                         value='title'
@@ -113,24 +117,24 @@ const SearchTodos = () => {
                                     />
                                 </RadioGroup>
                             </Grid>
-                            <Grid item />
                         </Grid>
                     </Form>
                 </Formik>
-            </div>
+            </Box>
 
-            {/* TODO: align to right side of screen */}
-            <Button onClick={resetSearchString} variant='outlined'>
-                Show all
-            </Button>
+            <Grid container justify='flex-end'>
+                {/* <HomeButton /> */}
 
-            <Paper>
-                <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
-            </Paper>
+                <Button onClick={resetSearchString} variant='outlined' startIcon={<List />}>
+                    Show all
+                </Button>
+            </Grid>
 
-            <Button component={Link} to='/' variant='outlined'>
-                Home
-            </Button>
+            <Box my={1}>
+                <Paper elevation={1}>
+                    <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
+                </Paper>
+            </Box>
         </Container>
     );
 };
