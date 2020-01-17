@@ -39,10 +39,11 @@ const SearchTodos = () => {
     useEffect(updateData, [ searchString ]);
 
     // Returns a string containing the id(s) of tag(s) which contain the given
-    // partial tag name. Tag matching is case insensitive.
+    // partial tag name. Tag name matching is case insensitive and any punctuation
+    // is removed before searching.
     function findTagId(partialTagName) {
-        // TODO: START HERE: clean before searching
-        const regExp = new RegExp('.*' + partialTagName + '.*', 'i');
+        const sanitizedTagName = partialTagName.replace(/[\W_]+/g, '');
+        const regExp = new RegExp('.*' + sanitizedTagName + '.*', 'i');
         const selectedTags = tags.filter((tag) => tag.attributes.name.match(regExp));
         const tagIds = selectedTags.reduce((accumulator, currentValue) => accumulator + ',' + currentValue.id, '');
         return tagIds ? tagIds : 0;

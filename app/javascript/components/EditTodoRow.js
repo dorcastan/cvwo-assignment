@@ -66,7 +66,10 @@ const EditTodoRow = (props) => {
     };
 
     const validateTitle = (str) => (str && str.length !== 0 ? undefined : 'Title cannot be empty');
-    const validateTagName = (str) => (str && str.length !== 0 ? undefined : 'Tag cannot be empty');
+    const validateTagName = (str) =>
+        str && str.length !== 0
+            ? str.match(/[\W_]/g) ? 'Tag name should only contain alphanumeric characters' : undefined
+            : 'Tag cannot be empty';
 
     return (
         <TableRow>
