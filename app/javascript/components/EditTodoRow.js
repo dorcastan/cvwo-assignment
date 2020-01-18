@@ -1,15 +1,11 @@
 import { Button, ButtonGroup, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
-import { CloseOutlined, DoneOutlined } from '@material-ui/icons';
+import { CloseOutlined, DoneOutlineOutlined } from '@material-ui/icons';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 
 // Renders a table row that contains a form with fields to edit a to-do's title,
 // details, and/or tag.
 const EditTodoRow = (props) => {
-    // TODO: clean up database - delete Tag if nothing else is pointing to it
-    // If original tag id !== new_tag_id, check whether orig_tag_id is linked to other todos
-    // If not, destroy original tag
-
     // Sends HTTP requests with CSRF verification using the given URL, HTTP
     // method, and (optional) payload.
     function sendRequest(url, method, payload) {
@@ -111,7 +107,7 @@ const EditTodoRow = (props) => {
 
                                 <Grid item xs={3}>
                                     <ButtonGroup size='small'>
-                                        <Button type='submit' color='primary' startIcon={<DoneOutlined />}>
+                                        <Button type='submit' color='primary' startIcon={<DoneOutlineOutlined />}>
                                             Confirm
                                         </Button>
                                         <Button
