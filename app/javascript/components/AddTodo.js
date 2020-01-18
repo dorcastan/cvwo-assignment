@@ -49,7 +49,7 @@ const AddTodo = () => {
             errorAttributes.tag = 'Tag name should only contain alphanumeric characters';
         }
 
-        return { attributes: errorAttributes };
+        return Object.keys(errorAttributes).length === 0 ? errorAttributes : { attributes: errorAttributes };
     };
 
     return (
@@ -119,7 +119,7 @@ const AddTodo = () => {
                                         <Button
                                             type='submit'
                                             variant='contained'
-                                            disabled={!!formik.errors}
+                                            disabled={Object.keys(formik.errors).length !== 0}
                                             color='primary'
                                             startIcon={<Add />}
                                         >

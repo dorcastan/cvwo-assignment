@@ -74,7 +74,7 @@ const EditTodoRow = (props) => {
             errorAttributes.tag = 'Tag name should only contain alphanumeric characters';
         }
 
-        return { attributes: errorAttributes };
+        return Object.keys(errorAttributes).length === 0 ? errorAttributes : { attributes: errorAttributes };
     };
 
     return (
