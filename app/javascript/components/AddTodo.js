@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { navigate } from '@reach/router';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import AppHeader from './AppHeader';
 
@@ -37,11 +37,20 @@ const AddTodo = () => {
         requestTodos();
     };
 
-    const validateTitle = (str) => (str && str.length !== 0 ? undefined : 'Title cannot be empty');
-    const validateTagName = (str) =>
-        str && str.length !== 0
-            ? str.match(/[\W_]/g) ? 'Tag name should only contain alphanumeric characters' : undefined
-            : 'Tag cannot be empty';
+    const validate = (values) => {
+        const { title, tag } = values.attributes;
+        const errorAttributes = {};
+        if (!title || title.length === 0) {
+            errorAttributes.title = 'Title cannot be empty';
+        }
+        if (!tag || tag.length === 0) {
+            errorAttributes.tag = 'Tag cannot be empty';
+        } else if (/[\W_]/.test(tag)) {
+            errorAttributes.tag = 'Tag name should only contain alphanumeric characters';
+        }
+
+        return { attributes: errorAttributes };
+    };
 
     return (
         <Container>
@@ -63,9 +72,10 @@ const AddTodo = () => {
                             tag: 'General'
                         }
                     }}
+                    validate={validate}
                     onSubmit={handleSubmit}
                 >
-                    {() => (
+                    {(formik) => (
                         <Form>
                             <Grid container direction='column' spacing={1}>
                                 <Grid item xs>
@@ -73,8 +83,10 @@ const AddTodo = () => {
                                         as={TextField}
                                         type='text'
                                         name='attributes.title'
-                                        placeholder='Title'
-                                        validate={validateTitle}
+                                        label='Title'
+                                        required
+                                        error={formik.errors.attributes && !!formik.errors.attributes.title}
+                                        helperText={formik.errors.attributes && formik.errors.attributes.title}
                                         fullWidth
                                         color='primary'
                                     />
@@ -84,7 +96,7 @@ const AddTodo = () => {
                                         as={TextField}
                                         type='text'
                                         name='attributes.details'
-                                        placeholder='Details'
+                                        label='Details'
                                         fullWidth
                                         color='primary'
                                     />
@@ -95,25 +107,27 @@ const AddTodo = () => {
                                             as={TextField}
                                             type='text'
                                             name='attributes.tag'
-                                            placeholder='Tag'
-                                            validate={validateTagName}
+                                            label='Tag'
+                                            required
+                                            error={formik.errors.attributes && !!formik.errors.attributes.tag}
+                                            helperText={formik.errors.attributes && formik.errors.attributes.tag}
                                             fullWidth
                                             color='primary'
                                         />
                                     </Grid>
                                     <Grid item xs={2} align='right'>
-                                        <Button type='submit' variant='contained' color='primary' startIcon={<Add />}>
+                                        <Button
+                                            type='submit'
+                                            variant='contained'
+                                            disabled={!!formik.errors}
+                                            color='primary'
+                                            startIcon={<Add />}
+                                        >
                                             Add
                                         </Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
-
-                            {/* TODO: organise layout and prettify */}
-                            <div>
-                                <ErrorMessage name='attributes.title' />
-                                <ErrorMessage name='attributes.tag' />
-                            </div>
                         </Form>
                     )}
                 </Formik>

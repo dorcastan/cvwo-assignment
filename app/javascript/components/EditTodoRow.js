@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
 import { CloseOutlined, DoneOutlineOutlined } from '@material-ui/icons';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import React from 'react';
 
 // Renders a table row that contains a form with fields to edit a to-do's title,
@@ -62,17 +62,26 @@ const EditTodoRow = (props) => {
         }
     };
 
-    const validateTitle = (str) => (str && str.length !== 0 ? undefined : 'Title cannot be empty');
-    const validateTagName = (str) =>
-        str && str.length !== 0
-            ? str.match(/[\W_]/g) ? 'Tag name should only contain alphanumeric characters' : undefined
-            : 'Tag cannot be empty';
+    const validate = (values) => {
+        const { title, tag } = values.attributes;
+        const errorAttributes = {};
+        if (!title || title.length === 0) {
+            errorAttributes.title = 'Title cannot be empty';
+        }
+        if (!tag || tag.length === 0) {
+            errorAttributes.tag = 'Tag cannot be empty';
+        } else if (/[\W_]/.test(tag)) {
+            errorAttributes.tag = 'Tag name should only contain alphanumeric characters';
+        }
+
+        return { attributes: errorAttributes };
+    };
 
     return (
         <TableRow>
             <TableCell colSpan='4'>
-                <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                    {() => (
+                <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validate}>
+                    {(formik) => (
                         <Form>
                             <Grid container spacing={2} justify='space-between'>
                                 <Grid item xs>
@@ -81,7 +90,9 @@ const EditTodoRow = (props) => {
                                         type='text'
                                         name='attributes.title'
                                         placeholder='Title'
-                                        validate={validateTitle}
+                                        required
+                                        error={formik.errors.attributes && !!formik.errors.attributes.title}
+                                        helperText={formik.errors.attributes && formik.errors.attributes.title}
                                         fullWidth
                                     />
                                 </Grid>
@@ -100,7 +111,9 @@ const EditTodoRow = (props) => {
                                         type='text'
                                         name='attributes.tag'
                                         placeholder='Tag'
-                                        validate={validateTagName}
+                                        required
+                                        error={formik.errors.attributes && !!formik.errors.attributes.tag}
+                                        helperText={formik.errors.attributes && formik.errors.attributes.tag}
                                         fullWidth
                                     />
                                 </Grid>
@@ -120,12 +133,6 @@ const EditTodoRow = (props) => {
                                     </ButtonGroup>
                                 </Grid>
                             </Grid>
-
-                            {/* TODO: Use Yup instead of field-level validation */}
-                            <div>
-                                <ErrorMessage name='attributes.title' />
-                                <ErrorMessage name='attributes.tag' />
-                            </div>
                         </Form>
                     )}
                 </Formik>
