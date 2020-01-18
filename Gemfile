@@ -31,7 +31,7 @@ gem 'jsonapi-resources'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-# Use Whenever for a clear syntax to write and deploy cron jobs
+# Use Whenever for a clear syntax to write and deploy cron jobs. Read more: https://github.com/javan/whenever
 gem 'whenever', require: false
 
 group :development, :test do
