@@ -6,7 +6,14 @@ Rails.application.routes.draw do
     jsonapi_resources :todos
     jsonapi_resources :tags
   end
+  
+  resources :users, only: [:create, :show, :index]
 
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  get '/logged_in', to: 'sessions#is_logged_in?'
+
+  # All other routes are handled by the front-end
   get "*path", to: "home#index", constraints: { format: "html" }
   
 end

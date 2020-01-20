@@ -1,7 +1,8 @@
 class Todo < ApplicationRecord
-    belongs_to :tag
+    # Counter cache for deletion of unused tags
+    belongs_to :tag, counter_cache: true
+    belongs_to :user
 
     validates :title, presence: true
     validates :tag_id, presence: true
-    # validates_associated :tag # Note: Possible, but will impact performance
 end
