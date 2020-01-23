@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
 
-const TodoList = () => {
+const TodoList = (props) => {
     const [ todos, setTodos ] = useState([]);
 
     // Updates the to-dos array by pulling from the application API.
@@ -20,7 +20,11 @@ const TodoList = () => {
 
     return (
         <Container>
-            <AppHeader />
+            <AppHeader
+                handleLogout={props.handleLogout}
+                loggedInStatus={props.loggedInStatus}
+                username={props.username}
+            />
 
             <Typography variant='h3'>Home</Typography>
 

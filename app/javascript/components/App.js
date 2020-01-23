@@ -54,10 +54,14 @@ function App() {
 
     return (
         <Router>
-            {/* TODO: need to pass loggedInStatus to other components too */}
-            <TodoList path='/' />
-            <AddTodo path='/add' />
-            <SearchTodos path='/search' />
+            <TodoList path='/' handleLogout={handleLogout} loggedInStatus={loggedInStatus} username={user.username} />
+            <AddTodo path='/add' handleLogout={handleLogout} loggedInStatus={loggedInStatus} username={user.username} />
+            <SearchTodos
+                path='/search'
+                handleLogout={handleLogout}
+                loggedInStatus={loggedInStatus}
+                username={user.username}
+            />
             <Login
                 path='/login'
                 handleLogin={handleLogin}

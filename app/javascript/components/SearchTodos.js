@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
 
-const SearchTodos = () => {
+const SearchTodos = (props) => {
     const [ todos, setTodos ] = useState([]);
     const [ tags, setTags ] = useState([]);
     const [ searchString, setSearchString ] = useState('');
@@ -64,7 +64,11 @@ const SearchTodos = () => {
 
     return (
         <Container>
-            <AppHeader />
+            <AppHeader
+                handleLogout={props.handleLogout}
+                loggedInStatus={props.loggedInStatus}
+                username={props.username}
+            />
 
             <Typography variant='h3' color='secondary'>
                 Search
