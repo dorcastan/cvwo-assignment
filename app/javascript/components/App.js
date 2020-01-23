@@ -29,8 +29,25 @@ function App() {
     };
 
     const handleLogout = () => {
-        setLoggedInStatus(false);
-        setUser({});
+        const deleteSession = async () => {
+            const csrfToken = document.querySelector('meta[name=csrf-token]').content;
+            const response = await fetch(`/logout`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/vnd.api+json',
+                    'X-CSRF-Token': csrfToken
+                }
+            });
+            const data = await response.json();
+            if (data.logged_out) {
+                setLoggedInStatus(false);
+                setUser({});
+            } else {
+                alert('Could not log out. Please try again later.');
+            }
+        };
+        deleteSession();
     };
 
     useEffect(checkLoggedInStatus, []);
