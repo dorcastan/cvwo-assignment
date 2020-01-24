@@ -1,8 +1,9 @@
-import { AppBar, Avatar, Box, Button, ButtonGroup, Grid, Paper, Tooltip, Typography } from '@material-ui/core';
+import { AppBar, Box, Button, ButtonGroup, Grid, Paper, Typography } from '@material-ui/core';
 import { Add, Search } from '@material-ui/icons';
 import { Link as RouterLink } from '@reach/router';
 import React from 'react';
 import HomeButton from './HomeButton';
+import UserAvatar from './UserAvatar';
 
 const AppHeader = (props) => (
     <Box mb={3} border={1} borderRadius='borderRadius' borderColor='primary.main'>
@@ -53,9 +54,7 @@ const AppHeader = (props) => (
                             {props.loggedInStatus && props.username ? (
                                 <Grid container justify='flex-end'>
                                     <Grid item>
-                                        <Tooltip title={props.username} aria-label={props.username}>
-                                            <Avatar>{props.username.charAt(0).toUpperCase()}</Avatar>
-                                        </Tooltip>
+                                        <UserAvatar username={props.username} />
                                     </Grid>
                                     <Grid item>
                                         <Button onClick={props.handleLogout} color='inherit'>

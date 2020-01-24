@@ -1,8 +1,8 @@
 import {
-    Avatar,
     Box,
     Button,
     ButtonGroup,
+    Container,
     Dialog,
     DialogTitle,
     Grid,
@@ -11,13 +11,13 @@ import {
     ListItemText,
     Paper,
     TextField,
-    Tooltip,
     Typography
 } from '@material-ui/core';
 import { Link as RouterLink, navigate } from '@reach/router';
 import { Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import HomeButton from './HomeButton';
+import UserAvatar from './UserAvatar';
 
 const ErrorDialog = (props) => (
     <Dialog open={props.open} onClose={props.handleClose} aria-labelledby='error-dialog-title'>
@@ -66,110 +66,110 @@ const Signup = (props) => {
     };
 
     return (
-        <Box border={1} borderRadius='borderRadius'>
-            <Paper elevation={1}>
-                <Box textAlign='center' bgcolor='primary.main' color='primary.contrastText' pt={2}>
-                    <Typography variant='h2' color='inherit'>
-                        To Do List
-                    </Typography>
-                    <Typography variant='h5' component='h3' color='inherit'>
-                        Sign Up
-                    </Typography>
-                </Box>
+        <Container>
+            <Box border={1} borderRadius='borderRadius'>
+                <Paper elevation={1}>
+                    <Box textAlign='center' bgcolor='primary.main' color='primary.contrastText' pt={2}>
+                        <Typography variant='h2' color='inherit'>
+                            To-Do List
+                        </Typography>
+                        <Typography variant='h5' component='h3' color='inherit'>
+                            Sign Up
+                        </Typography>
+                    </Box>
 
-                <Box bgcolor='primary.main' color='primary.contrastText' pb={2} px={2}>
-                    {props.loggedInStatus &&
-                    props.username && (
-                        <Grid container justify='flex-end' spacing={1}>
-                            <Grid item>
-                                <Tooltip title={props.username} aria-label={props.username}>
-                                    <Avatar>{props.username.charAt(0).toUpperCase()}</Avatar>
-                                </Tooltip>
-                            </Grid>
-                            <Grid item>
-                                <ButtonGroup>
-                                    <Button component={RouterLink} to='/login' color='inherit'>
-                                        Log In As Other User
-                                    </Button>
-                                    <Button onClick={props.handleLogout} color='inherit'>
-                                        Log Out
-                                    </Button>
-                                </ButtonGroup>{' '}
-                            </Grid>
-                        </Grid>
-                    )}
-                </Box>
-
-                <Box p={2}>
-                    <HomeButton />
-                </Box>
-
-                <Box m={2}>
-                    <Formik
-                        initialValues={{
-                            username: '',
-                            password: '',
-                            password_confirmation: ''
-                        }}
-                        onSubmit={handleSubmit}
-                    >
-                        <Form>
-                            <Grid container direction='column' alignItems='center' spacing={3}>
+                    <Box bgcolor='primary.main' color='primary.contrastText' pb={2} px={2}>
+                        {props.loggedInStatus &&
+                        props.username && (
+                            <Grid container justify='flex-end' spacing={1}>
                                 <Grid item>
-                                    <Field
-                                        as={TextField}
-                                        type='text'
-                                        name='username'
-                                        label='Username'
-                                        required
-                                        variant='outlined'
-                                    />
+                                    <UserAvatar username={props.username} />
                                 </Grid>
                                 <Grid item>
-                                    <Field
-                                        as={TextField}
-                                        type='password'
-                                        name='password'
-                                        label='Password'
-                                        required
-                                        variant='outlined'
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Field
-                                        as={TextField}
-                                        type='password'
-                                        name='password_confirmation'
-                                        label='Password Confirmation'
-                                        required
-                                        variant='outlined'
-                                    />
-                                </Grid>
-                                <Grid container item justify='center' alignItems='center' spacing={1}>
-                                    <Grid item>
-                                        <Button type='submit' variant='contained' color='primary'>
-                                            Sign Up
+                                    <ButtonGroup>
+                                        <Button component={RouterLink} to='/login' color='inherit'>
+                                            Log In As Other User
                                         </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant='body1' display='inline'>
-                                            or
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button component={RouterLink} to='/login' color='primary'>
-                                            Log In
+                                        <Button onClick={props.handleLogout} color='inherit'>
+                                            Log Out
                                         </Button>
-                                    </Grid>
+                                    </ButtonGroup>{' '}
                                 </Grid>
                             </Grid>
-                        </Form>
-                    </Formik>
+                        )}
+                    </Box>
 
-                    <ErrorDialog open={open} handleClose={handleClose} errors={errors} />
-                </Box>
-            </Paper>
-        </Box>
+                    <Box p={2}>
+                        <HomeButton />
+                    </Box>
+
+                    <Box m={2}>
+                        <Formik
+                            initialValues={{
+                                username: '',
+                                password: '',
+                                password_confirmation: ''
+                            }}
+                            onSubmit={handleSubmit}
+                        >
+                            <Form>
+                                <Grid container direction='column' alignItems='center' spacing={3}>
+                                    <Grid item>
+                                        <Field
+                                            as={TextField}
+                                            type='text'
+                                            name='username'
+                                            label='Username'
+                                            required
+                                            variant='outlined'
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Field
+                                            as={TextField}
+                                            type='password'
+                                            name='password'
+                                            label='Password'
+                                            required
+                                            variant='outlined'
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Field
+                                            as={TextField}
+                                            type='password'
+                                            name='password_confirmation'
+                                            label='Password Confirmation'
+                                            required
+                                            variant='outlined'
+                                        />
+                                    </Grid>
+                                    <Grid container item justify='center' alignItems='center' spacing={1}>
+                                        <Grid item>
+                                            <Button type='submit' variant='contained' color='primary'>
+                                                Sign Up
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant='body1' display='inline'>
+                                                or
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button component={RouterLink} to='/login' color='primary'>
+                                                Log In
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        </Formik>
+
+                        <ErrorDialog open={open} handleClose={handleClose} errors={errors} />
+                    </Box>
+                </Paper>
+            </Box>
+        </Container>
     );
 };
 
