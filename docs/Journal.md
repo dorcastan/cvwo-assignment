@@ -1,5 +1,36 @@
 # My Learning Journal
 
+## 24 Jan 20: Entry 0xE
+
+Adding user authentication pages to the main application UI - standard work.
+
+## 20 Jan 20: Entry 0xD
+
+Completed basic user authentication! Mostly following a tutorial, but with 
+some UI customisations along the way.
+
+## 18 Jan 20: Entry 0xC
+
+Part 2 of Saturday's work. Made error messages show up properly for forms. 
+Successfully hosted on Heroku. Working on user authentication.
+
+* Found out how to access attributes from the Formik object
+* Got some idea of the difference between sessions & tokens (JWT)
+* Why uniqueness needs to be handled at the database level as well
+
+## 17-18 Jan 20: Entry 0xB
+
+Designed user interface using Material UI. Dealing with Formik fields took 
+a while, as many online solutions required custom components to be created - 
+not ideal for me given the number of (non-reused) components needed. 
+Also spent some time experimenting with different layouts and spacing.
+
+Separately, found a bug in my search-by-tag: searching for special characters 
+messed up the regex, resulting in an error. Not too difficult to resolve.
+
+Resources:
+* [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
 ## 13 Jan 20: Entry 0xA
 
 Successfully enhanced search functionality!
