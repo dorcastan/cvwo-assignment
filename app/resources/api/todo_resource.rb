@@ -1,5 +1,5 @@
 class Api::TodoResource < JSONAPI::Resource
-    attributes :title, :details, :tag_id, :tag
+    attributes :title, :details, :tag_id, :tag, :user_id
     has_one :tag
 
     # Returns the model's tag name if a tag is present.

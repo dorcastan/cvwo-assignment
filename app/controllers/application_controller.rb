@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
     # Convenience methods for user authentication
     # Taken from https://medium.com/how-i-get-it/react-with-rails-user-authentication-8977e98762f2
     
-    # skip_before_action :verify_authenticity_token
+    # TODO: find a way to use sessions without disabling CSRF verification
+    skip_before_action :verify_authenticity_token
 
     helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
@@ -31,6 +32,11 @@ end
 
 class ApiController < ActionController::API
     include JSONAPI::ActsAsResourceController
+
+    # def create
+    #     Rails.logger.debug(params)
+    #     super
+    # end
 end
 
 class HomeController < ApplicationController
