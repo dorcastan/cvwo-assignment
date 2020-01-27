@@ -17,17 +17,27 @@ class Api::TodoResource < JSONAPI::Resource
         end
     end
 
-    # Filter todos whose titles contain the given value (case insensitive).
+    # Filters to-dos whose titles contain the given value (case insensitive).
     filter :title, apply: -> (records, value, _options) {
         @value_string = value[0]
         records.where("title ILIKE ?", "%#{@value_string}%")
     }
     
-    # Filter todos whose details contain the given value (case insensitive).
+    # Filters to-dos whose details contain the given value (case insensitive).
     filter :details, apply: -> (records, value, _options) {
         @value_string = value[0]
         records.where("details ILIKE ?", "%#{@value_string}%")
     }
     
-    filter :tag # Note: tags are filtered by tag_id
+    # Filters to-dos by their tag (tag_id).
+    filter :tag
+
+    # Filters to-dos that belong to the current (logged in) user. 
+    # If the given user_id does not match the current user or if no user_id is 
+    # specified, no to-dos are returned.
+    filter :user_id,
+        default: 0,
+        verify: -> (values, context) {
+            values.select { |value| value == context[:current_user_id].to_s }
+        }
 end

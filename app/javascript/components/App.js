@@ -54,13 +54,20 @@ function App() {
 
     return (
         <Router>
-            <TodoList path='/' handleLogout={handleLogout} loggedInStatus={loggedInStatus} username={user.username} />
+            <TodoList
+                path='/'
+                handleLogout={handleLogout}
+                loggedInStatus={loggedInStatus}
+                username={user.username}
+                userId={user.id}
+            />
             <AddTodo path='/add' handleLogout={handleLogout} loggedInStatus={loggedInStatus} username={user.username} />
             <SearchTodos
                 path='/search'
                 handleLogout={handleLogout}
                 loggedInStatus={loggedInStatus}
                 username={user.username}
+                userId={user.id}
             />
             <Login
                 path='/login'

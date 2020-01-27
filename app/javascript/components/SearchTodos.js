@@ -25,7 +25,7 @@ const SearchTodos = (props) => {
     // Tag names are saved as lower-case.
     const updateData = () => {
         const requestTodos = async () => {
-            const response = await fetch(`api/todos/${searchString}`);
+            const response = await fetch(`api/todos/?filter[user_id]=${props.userId}${searchString}`);
             const { data } = await response.json();
             setTodos(data.map((todo) => ({ ...todo, isBeingEdited: false })));
         };
@@ -38,7 +38,7 @@ const SearchTodos = (props) => {
         requestTags();
     };
 
-    useEffect(updateData, [ searchString ]);
+    useEffect(updateData, [ searchString, props.userId ]);
 
     // Returns a string containing the id(s) of tag(s) which contain the given
     // partial tag name. Tag name matching is case insensitive and any punctuation
@@ -54,7 +54,7 @@ const SearchTodos = (props) => {
     // Sets the search string which is used for retrieving data.
     function updateSearchString(values) {
         const query = values.type === 'tag' ? findTagId(values.query) : values.query;
-        setSearchString(`?filter[${values.type}]=${query}`);
+        setSearchString(`&filter[${values.type}]=${query}`);
     }
 
     // Sets the search string to the default value.

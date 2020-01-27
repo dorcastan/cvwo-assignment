@@ -9,14 +9,14 @@ const TodoList = (props) => {
     // Updates the to-dos array by pulling from the application API.
     const updateTodos = () => {
         const requestTodos = async () => {
-            const response = await fetch('api/todos');
+            const response = await fetch(`api/todos?filter[user_id]=${props.userId}`);
             const { data } = await response.json();
             setTodos(data.map((todo) => ({ ...todo, isBeingEdited: false })));
         };
         requestTodos();
     };
 
-    useEffect(updateTodos, []);
+    useEffect(updateTodos, [ props.userId ]);
 
     return (
         <Container>
