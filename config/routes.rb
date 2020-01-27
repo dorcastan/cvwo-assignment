@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   namespace :api do
-    jsonapi_resources :todos
+    jsonapi_resources :todos, only: [:index, :create, :update, :destroy]
     jsonapi_resources :tags
   end
   
-  resources :users, only: [:create, :show, :index]
+  resources :users, only: [:create]
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
