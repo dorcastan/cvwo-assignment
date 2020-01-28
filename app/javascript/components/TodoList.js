@@ -2,6 +2,7 @@ import { Box, Container, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
+import Welcome from './Welcome';
 
 const TodoList = (props) => {
     const [ todos, setTodos ] = useState([]);
@@ -28,11 +29,21 @@ const TodoList = (props) => {
 
             <Typography variant='h3'>Home</Typography>
 
-            <Box my={2}>
-                <Paper elevation={1}>
-                    <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
-                </Paper>
-            </Box>
+            {props.loggedInStatus ? (
+                <Box my={2}>
+                    <Typography variant='body1' component='div' paragraph>
+                        Welcome,{' '}
+                        <Typography display='inline' color='primary'>
+                            {props.username}
+                        </Typography>! Here are your tasks:
+                    </Typography>
+                    <Paper elevation={1}>
+                        <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
+                    </Paper>
+                </Box>
+            ) : (
+                <Welcome />
+            )}
         </Container>
     );
 };
