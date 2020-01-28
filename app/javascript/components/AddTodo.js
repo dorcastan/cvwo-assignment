@@ -28,9 +28,10 @@ const AddTodo = (props) => {
                 navigate('/');
             } else {
                 alert(
-                    'The To-Do could not be created. \n\n'.concat(
-                        `Title: ${values.attributes.title} \nBody: ${values.attributes.details}\n`
-                    )
+                    'The To-Do could not be created. \n\n' +
+                        `Title: ${values.attributes.title} \n` +
+                        `Details: ${values.attributes.details}\n` +
+                        `Tag: ${values.attributes.tag}\n`
                 );
             }
         };
