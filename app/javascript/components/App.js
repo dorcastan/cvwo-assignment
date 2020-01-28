@@ -2,6 +2,7 @@ import { Router } from '@reach/router';
 import React, { useEffect, useState } from 'react';
 import AddTodo from './AddTodo';
 import Login from './Login';
+import NotFound from './NotFound';
 import SearchTodos from './SearchTodos';
 import Signup from './Signup';
 import TodoList from './TodoList';
@@ -78,6 +79,13 @@ function App() {
             />
             <Signup
                 path='/signup'
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+                loggedInStatus={loggedInStatus}
+                username={user.username}
+            />
+            <NotFound
+                default
                 handleLogin={handleLogin}
                 handleLogout={handleLogout}
                 loggedInStatus={loggedInStatus}
