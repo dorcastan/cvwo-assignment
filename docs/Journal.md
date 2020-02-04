@@ -1,5 +1,48 @@
 # My Learning Journal
 
+## 27 Jan 20: Entry 0x10
+
+Trying to implement access control. Settled for a (rather hacky) method of 
+only allowing access to to-dos if requested todo(s) belong(s) to the user that 
+is logged in. Process documented below.
+
+---
+* Attempt #1: Select to-dos using `Todo#find_by`, apply the relevant filters, 
+then serialize it to JSON API format.
+    * Issue: JSONAPI::ResourceSerializer's #serialize_to_hash seems to have been 
+[removed](https://github.com/cerebris/jsonapi-resources/issues/1149).
+
+* Attempt #2: Filter resources using `session[:user_id]`
+    * Issue: Sessions are not accessible from within JSONAPI resources
+* Attempt #2b: Pass `user_id` from controller to resource through `context`
+    * Issue: Not all resource methods receive context from controller. In 
+    particular, can't set a default value using `context[:current_user_id]`.
+
+* Attempt #3: Don't show any to-dos unless the ID of the logged in user is 
+specified as a filter.
+    * Drawback: Client must specify `/api/todos?filter[user_id]=id` when 
+    requesting to-dos.
+    * Mitigating factor: It's still technically secure, since to-dos cannot be 
+    accessed without logging in first.
+
+---
+
+Prettifying UI. Almost there!
+
+## 25 Jan 20: Entry 0xF
+
+Fixed any to-do functionality that was broken by the addition of users.
+Figuring out how to add a default parameter when creating to-dos was tricky, 
+partially due to the appearance of unrelated errors and difficulties in 
+debugging vague errors (e.g. 422 Unprocessable Entity). A lot of time spent 
+on trial-and-error, waiting for the app to reload, or restarting the Rails 
+server.
+
+* Discovered the existence of ActiveRecord::Parameters (as it turns out, 
+didn't need to use them anyway) (saving [this link](http://vaidehijoshi.github.io/blog/2015/11/24/peeking-under-the-hood-of-actioncontroller-parameters-part-2/) 
+for future reference)
+* Learnt to use Rails logger for debugging
+
 ## 24 Jan 20: Entry 0xE
 
 Adding user authentication pages to the main application UI - standard work.
