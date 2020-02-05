@@ -4,6 +4,7 @@ import { navigate } from '@reach/router';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import AppHeader from './AppHeader';
+import NotLoggedIn from './NotLoggedIn';
 
 // Credit: AddTodo is adapted from
 // https://dev.to/able/building-and-consuming-a-json-api-with-rails-and-react-42p6
@@ -60,83 +61,90 @@ const AddTodo = (props) => {
                 loggedInStatus={props.loggedInStatus}
                 username={props.username}
             />
+            {props.loggedInStatus ? (
+                <div>
+                    <Box mb={3}>
+                        <Typography variant='h3' color='primary'>
+                            Add a To-Do
+                        </Typography>
+                    </Box>
 
-            <Box mb={3}>
-                <Typography variant='h3' color='primary'>
-                    Add a To-Do
-                </Typography>
-            </Box>
-
-            <Box px={2}>
-                <Formik
-                    initialValues={{
-                        type: 'todos',
-                        attributes: {
-                            title: '',
-                            details: '',
-                            tag: 'General'
-                        }
-                    }}
-                    validate={validate}
-                    onSubmit={handleSubmit}
-                >
-                    {(formik) => (
-                        <Form>
-                            <Grid container direction='column' spacing={1}>
-                                <Grid item xs>
-                                    <Field
-                                        as={TextField}
-                                        type='text'
-                                        name='attributes.title'
-                                        label='Title'
-                                        required
-                                        error={formik.errors.attributes && !!formik.errors.attributes.title}
-                                        helperText={formik.errors.attributes && formik.errors.attributes.title}
-                                        fullWidth
-                                        color='primary'
-                                    />
-                                </Grid>
-                                <Grid item xs>
-                                    <Field
-                                        as={TextField}
-                                        type='text'
-                                        name='attributes.details'
-                                        label='Details'
-                                        fullWidth
-                                        color='primary'
-                                    />
-                                </Grid>
-                                <Grid item container justify='space-between' alignItems='center' spacing={3}>
-                                    <Grid item>
-                                        <Field
-                                            as={TextField}
-                                            type='text'
-                                            name='attributes.tag'
-                                            label='Tag'
-                                            required
-                                            error={formik.errors.attributes && !!formik.errors.attributes.tag}
-                                            helperText={formik.errors.attributes && formik.errors.attributes.tag}
-                                            fullWidth
-                                            color='primary'
-                                        />
+                    <Box px={2}>
+                        <Formik
+                            initialValues={{
+                                type: 'todos',
+                                attributes: {
+                                    title: '',
+                                    details: '',
+                                    tag: 'General'
+                                }
+                            }}
+                            validate={validate}
+                            onSubmit={handleSubmit}
+                        >
+                            {(formik) => (
+                                <Form>
+                                    <Grid container direction='column' spacing={1}>
+                                        <Grid item xs>
+                                            <Field
+                                                as={TextField}
+                                                type='text'
+                                                name='attributes.title'
+                                                label='Title'
+                                                required
+                                                error={formik.errors.attributes && !!formik.errors.attributes.title}
+                                                helperText={formik.errors.attributes && formik.errors.attributes.title}
+                                                fullWidth
+                                                color='primary'
+                                            />
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Field
+                                                as={TextField}
+                                                type='text'
+                                                name='attributes.details'
+                                                label='Details'
+                                                fullWidth
+                                                color='primary'
+                                            />
+                                        </Grid>
+                                        <Grid item container justify='space-between' alignItems='center' spacing={3}>
+                                            <Grid item>
+                                                <Field
+                                                    as={TextField}
+                                                    type='text'
+                                                    name='attributes.tag'
+                                                    label='Tag'
+                                                    required
+                                                    error={formik.errors.attributes && !!formik.errors.attributes.tag}
+                                                    helperText={
+                                                        formik.errors.attributes && formik.errors.attributes.tag
+                                                    }
+                                                    fullWidth
+                                                    color='primary'
+                                                />
+                                            </Grid>
+                                            <Grid item xs={2} align='right'>
+                                                <Button
+                                                    type='submit'
+                                                    variant='contained'
+                                                    disabled={Object.keys(formik.errors).length !== 0}
+                                                    color='primary'
+                                                    startIcon={<Add />}
+                                                >
+                                                    Add
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={2} align='right'>
-                                        <Button
-                                            type='submit'
-                                            variant='contained'
-                                            disabled={Object.keys(formik.errors).length !== 0}
-                                            color='primary'
-                                            startIcon={<Add />}
-                                        >
-                                            Add
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Form>
-                    )}
-                </Formik>
-            </Box>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Box>
+                </div>
+            ) : (
+                <NotLoggedIn />
+            )}
 
             {/* <h2>Your current to-dos</h2>
             <ShowTodos /> */}

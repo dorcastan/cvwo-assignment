@@ -14,6 +14,7 @@ import { List, Search } from '@material-ui/icons';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
+import NotLoggedIn from './NotLoggedIn';
 import TodosTable from './TodosTable';
 
 const SearchTodos = (props) => {
@@ -70,75 +71,91 @@ const SearchTodos = (props) => {
                 username={props.username}
             />
 
-            <Typography variant='h3' color='secondary'>
-                Search
-            </Typography>
+            {props.loggedInStatus ? (
+                <div>
+                    <Typography variant='h3' color='secondary'>
+                        Search
+                    </Typography>
 
-            <Box mt={1}>
-                <Formik
-                    initialValues={{
-                        query: '',
-                        type: 'title'
-                    }}
-                    onSubmit={updateSearchString}
-                >
-                    <Form>
-                        <Grid container alignItems='center' justify='flex-start'>
-                            <Grid item xs>
-                                <Field
-                                    as={TextField}
-                                    type='search'
-                                    name='query'
-                                    placeholder='What are you looking for?'
-                                    fullWidth
-                                    color='secondary'
-                                />
-                            </Grid>
-                            <Grid item xs={2} align='right'>
-                                <Button type='submit' variant='contained' color='secondary' startIcon={<Search />}>
-                                    Search
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        <Grid container alignItems='center' justify='flex-start' spacing={2}>
-                            {/* <FormLabel component='legend'>Location</FormLabel> */}
-                            <Grid item xs>
-                                <RadioGroup row={true}>
-                                    <FormControlLabel
-                                        value='title'
-                                        control={<Field as={Radio} type='radio' name='type' value='title' />}
-                                        label='Title'
-                                    />
-                                    <FormControlLabel
-                                        value='details'
-                                        control={<Field as={Radio} type='radio' name='type' value='details' />}
-                                        label='Details'
-                                    />
-                                    <FormControlLabel
-                                        value='tag'
-                                        control={<Field as={Radio} type='radio' name='type' value='tag' />}
-                                        label='Tag'
-                                    />
-                                </RadioGroup>
-                            </Grid>
-                        </Grid>
-                    </Form>
-                </Formik>
-            </Box>
+                    <Box mt={1}>
+                        <Formik
+                            initialValues={{
+                                query: '',
+                                type: 'title'
+                            }}
+                            onSubmit={updateSearchString}
+                        >
+                            <Form>
+                                <Grid container alignItems='center' justify='flex-start'>
+                                    <Grid item xs>
+                                        <Field
+                                            as={TextField}
+                                            type='search'
+                                            name='query'
+                                            placeholder='What are you looking for?'
+                                            fullWidth
+                                            color='secondary'
+                                        />
+                                    </Grid>
+                                    <Grid item xs={2} align='right'>
+                                        <Button
+                                            type='submit'
+                                            variant='contained'
+                                            color='secondary'
+                                            startIcon={<Search />}
+                                        >
+                                            Search
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid container alignItems='center' justify='flex-start' spacing={2}>
+                                    {/* <FormLabel component='legend'>Location</FormLabel> */}
+                                    <Grid item xs>
+                                        <RadioGroup row={true}>
+                                            <FormControlLabel
+                                                value='title'
+                                                control={<Field as={Radio} type='radio' name='type' value='title' />}
+                                                label='Title'
+                                            />
+                                            <FormControlLabel
+                                                value='details'
+                                                control={<Field as={Radio} type='radio' name='type' value='details' />}
+                                                label='Details'
+                                            />
+                                            <FormControlLabel
+                                                value='tag'
+                                                control={<Field as={Radio} type='radio' name='type' value='tag' />}
+                                                label='Tag'
+                                            />
+                                        </RadioGroup>
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        </Formik>
+                    </Box>
 
-            <Grid container justify='flex-end'>
-                {/* <HomeButton /> */}
+                    <Grid container justify='flex-end'>
+                        {/* <HomeButton /> */}
 
-                <Button onClick={resetSearchString} variant='outlined' startIcon={<List />}>
-                    Show all
-                </Button>
-            </Grid>
+                        <Button onClick={resetSearchString} variant='outlined' startIcon={<List />}>
+                            Show all
+                        </Button>
+                    </Grid>
 
-            <Box my={1}>
-                <Paper elevation={1}>
-                    <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateData} query={searchString} />
-                </Paper>
-            </Box>
+                    <Box my={1}>
+                        <Paper elevation={1}>
+                            <TodosTable
+                                todos={todos}
+                                setTodos={setTodos}
+                                updateTodos={updateData}
+                                query={searchString}
+                            />
+                        </Paper>
+                    </Box>
+                </div>
+            ) : (
+                <NotLoggedIn />
+            )}
         </Container>
     );
 };
