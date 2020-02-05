@@ -5,7 +5,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import SearchTodos from './SearchTodos';
 import Signup from './Signup';
-import TodoList from './TodoList';
+import TodoListHome from './TodoListHome';
 
 function App() {
     const [ loggedInStatus, setLoggedInStatus ] = useState(false);
@@ -55,7 +55,7 @@ function App() {
 
     return (
         <Router>
-            <TodoList
+            <TodoListHome
                 path='/'
                 handleLogout={handleLogout}
                 loggedInStatus={loggedInStatus}

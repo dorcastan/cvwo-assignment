@@ -4,7 +4,7 @@ import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
 import Welcome from './Welcome';
 
-const TodoList = (props) => {
+const TodoListHome = (props) => {
     const [ todos, setTodos ] = useState([]);
 
     // Updates the to-dos array by pulling from the application API.
@@ -48,4 +48,4 @@ const TodoList = (props) => {
     );
 };
 
-export default TodoList;
+export default TodoListHome;
