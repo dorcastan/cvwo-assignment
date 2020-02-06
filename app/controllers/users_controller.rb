@@ -1,31 +1,31 @@
 class UsersController < ApplicationController
-    def index
-        @users = User.all
-        if @users
-            render json: {
-                users: @users
-            }
-        else
-            render json: {
-                status: 500,
-                errors: ['No users found']
-            }
-        end
-    end
+    # def index
+    #     @users = User.all
+    #     if @users
+    #         render json: {
+    #             users: @users
+    #         }
+    #     else
+    #         render json: {
+    #             status: 500,
+    #             errors: ['No users found']
+    #         }
+    #     end
+    # end
 
-    def show
-        @user = User.find(params[:id])
-        if @user
-            render json: {
-                user: @user
-            }
-        else
-            render json: {
-                status: 500,
-                errors: ['User not found']
-            }
-        end
-    end
+    # def show
+    #     @user = User.find(params[:id])
+    #     if @user
+    #         render json: {
+    #             user: @user
+    #         }
+    #     else
+    #         render json: {
+    #             status: 500,
+    #             errors: ['User not found']
+    #         }
+    #     end
+    # end
 
     def create
         @user = User.new(user_params)

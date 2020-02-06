@@ -32,11 +32,6 @@ end
 
 class ApiController < ActionController::API
     include JSONAPI::ActsAsResourceController
-
-    # def create
-    #     Rails.logger.debug(params)
-    #     super
-    # end
 end
 
 class HomeController < ApplicationController

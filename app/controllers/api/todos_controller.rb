@@ -1,5 +1,5 @@
 class Api::TodosController < ApiController
-    # Adds the currently logged in user to the given parameters.
+    # Adds the current user to the given parameters before calling #create
     def create
         params[:data][:attributes]['user-id'] = context[:current_user_id]
         super
