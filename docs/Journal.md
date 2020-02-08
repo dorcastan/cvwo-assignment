@@ -1,5 +1,37 @@
 # My Learning Journal
 
+## 7-8 Feb 20: Entry 0x12
+
+Final days. Mostly documentation work as I don't have enough time to implement
+and debug anything major.
+
+## 5-6 Feb 20: Entry 0x11
+
+[link](#5-6-feb-20-entry-0x11)
+
+Attempted to deploy to Heroku, but encountered problems with to-do creation.
+After combing through the logs, discovered that session cookies were not being 
+saved in the production environment (i.e. on Heroku too). 
+
+* Solution: Disabled domain name for session cookies in production environment, 
+because I couldn't figure out what the correct domain name should be. 
+    * Drawback: Session cookies [will not work](https://sam-low.com/ruby/rails/cookie/changing-rails-session-cookie-domain.html) 
+    with subdomains of the original site.
+    * Mitigating factor: It is virtually impossible that this (Heroku-hosted) 
+    web app will end up with a subdomain anyway.
+
+Silver lining:
+* Learnt how to test the app locally in the production environment: Run the 
+necessary updates with `RAILS_ENV=production <command>`, followed by 
+`rails s -e production`
+* Revised the different types of session stores: cookies vs cache vs database. 
+Opted for cookie store here since not much information needs to be stored (and 
+security is somewhat protected by Rails).
+
+Side note: CSRF token verification is still disabled on the back-end in order 
+for sessions to work. Not ideal.
+
+
 ## 27 Jan 20: Entry 0x10
 
 Trying to implement access control. Settled for a (rather hacky) method of 
@@ -45,7 +77,8 @@ for future reference)
 
 ## 24 Jan 20: Entry 0xE
 
-Adding user authentication pages to the main application UI - standard work.
+Adding user authentication pages to the main application UI - the usual 
+UI-designing-and-tweaking process.
 
 ## 20 Jan 20: Entry 0xD
 
