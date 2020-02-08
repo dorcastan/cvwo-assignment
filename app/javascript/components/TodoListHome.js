@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography } from '@material-ui/core';
+import { Box, Container, Link, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
 import TodosTable from './TodosTable';
@@ -37,9 +37,20 @@ const TodoListHome = (props) => {
                             {props.username}
                         </Typography>! Here are your tasks:
                     </Typography>
+
                     <Paper elevation={1}>
                         <TodosTable todos={todos} setTodos={setTodos} updateTodos={updateTodos} />
                     </Paper>
+
+                    <Box py={2}>
+                        <Typography component='div' variant='body2'>
+                            A user guide is available at{' '}
+                            <Link href='https://dorcastan.github.io/cvwo-assignment/#user-guide'>this link.</Link> If
+                            you have other difficulties, you can also file a report in the{' '}
+                            <Link href='https://github.com/dorcastan/cvwo-assignment/issues'>issue tracker</Link> on
+                            GitHub.
+                        </Typography>
+                    </Box>
                 </Box>
             ) : (
                 <Welcome />
