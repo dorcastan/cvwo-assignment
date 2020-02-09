@@ -2,12 +2,9 @@
 
 ## 7-8 Feb 20: Entry 0x12
 
-Final days. Mostly documentation work as I don't have enough time to implement
-and debug anything major.
+Final days - mostly documentation work.
 
 ## 5-6 Feb 20: Entry 0x11
-
-[link](#5-6-feb-20-entry-0x11)
 
 Attempted to deploy to Heroku, but encountered problems with to-do creation.
 After combing through the logs, discovered that session cookies were not being 

@@ -6,10 +6,16 @@
 be done.
 
 With a simple sign-up process and access to tasks from different devices, 
-it is easy to jot down notes or tasks to be done later.
+it is easy to jot down notes or tasks to be done later. 
+
+[Try out the live app here!](http://todolist-9920.herokuapp.com/)
 
 > Note: *To-Do List* is intended for desktop use. While it still works on 
 mobile devices, the layout and display size may not be optimal.
+
+> CVWO assignment final submission [here](#other-information)
+
+---
 
 ## User Guide
 
@@ -26,15 +32,16 @@ you might use, based on whether you are logged in or not.
 ![Navigation bar if user is logged in](/docs/ui/nav-bar-logged-in.png)
 
 #### Home page
-* When you first view the *To-Do List* [home page](http://todolist-9920.herokuapp.com/), 
-you should see a welcome message with links to directing you to log in or sign up.
+* When you first view the *To-Do List* [**Home**](http://todolist-9920.herokuapp.com/)
+page, you should see a welcome message with links to directing you to log in 
+or sign up.
 * The home page will show your list of to-dos after you log in.
 
 
 ### Getting started
 
 New Users:
-* [Sign up](http://todolist-9920.herokuapp.com/signup) for a new account to 
+* [**Sign Up**](http://todolist-9920.herokuapp.com/signup) for a new account to 
 access the functionality of *To-Do List*.
 * All you have to provide is a **username** and **password**. Try not to use 
 the same password that you use for other accounts – this application is not 
@@ -43,8 +50,8 @@ entirely secure.
     * **IMPORTANT**: Please remember your password. There's no way to recover it.
 
 Existing Users:
-* Head over to the [log in page](http://todolist-9920.herokuapp.com/login) to 
-access your account.
+* Head over to the [**Log In**](http://todolist-9920.herokuapp.com/login) page 
+to access your account.
 * Again, if you forget your password, sorry. You'll have to create a new 
 account. There is no way to access the lost to-dos. (Alternatively, try 
 sending an email to the system administrator to transfer your to-dos to a 
@@ -59,11 +66,13 @@ accounts.
 ### Managing tasks
 
 Viewing To-Dos:
-* Your list of tasks is available on the home page after logging in.
+* Your list of tasks is available on the [**Home**](http://todolist-9920.herokuapp.com/) 
+page after log in.
 * Alternatively, you may choose to view them from the **Search** page by 
 selecting "Show All".
 
 Adding a To-Do:
+* Navigate to the [**Add**](http://todolist-9920.herokuapp.com/add) page.
 * You will see a form where you can specify a title, details, and tag for your 
 task. You must specify a title and tag for your to-do.
     * By default, the tag field will be set to 'General'. You can change it to 
@@ -74,6 +83,7 @@ any value according to your needs, but the tag must be alphanumeric.
 available after the required conditions are met.
 
 Searching for To-Dos:
+* Navigate to the [**Search**](http://todolist-9920.herokuapp.com/search) page.
 * Type in a keyword or word fragment and specify whether you want to search 
 to-dos by title, details, or tag. You can type part of a word (partial matches 
 work). Also, searches are case-insensitive so you don't have to worry about 
@@ -91,6 +101,8 @@ To-dos are modified directly from the page that you are on (**Home** or
     present, and tags should only contain alphanumeric characters.
 * To *delete* a to-do, select the "Delete" button.
     * **IMPORTANT**: Be careful when doing this. Deleted to-dos cannot be retrieved.
+
+---
 
 ## Implementation Notes
 
@@ -118,13 +130,12 @@ of to-dos (e.g. retrieve from the `tags` table instead of filtering from
 
 ### API
 
-The API does not delete tags when an old tag is replaced by a new tag. As 
-such, prolonged usage of the app without maintenance may result in the database 
-being filled up with unused tags and users. A Rake task is provided to 
-provide automatic clean-up of tags (can be set-up using Cron: `whenever 
+The API controller does not delete tags when an old tag is replaced by a new 
+tag. As such, prolonged usage of the app without maintenance may result in the 
+database being filled up with unused tags and users. A Rake task is provided 
+to provide automatic clean-up of tags (can be set-up using Cron: `whenever 
 --update-crontab`), however it is not being run on Heroku as using the Heroku 
-scheduler requires a verified Heroku account (with credit card information 
-supplied).
+scheduler requires a verified Heroku account (with credit card information).
 
 ### Front-End
 
@@ -135,24 +146,24 @@ These are the major components used and their corresponding routes, where releva
 
 ```
 App 
-|-- TodoListHome - /
+|-- TodoListHome ----- /
 |   |-- AppHeader
 |   |-- TodosTable
-|   •-- Welcome*
-|-- AddTodo - /add
+|   •-- Welcome
+|-- AddTodo ---------- /add
 |   |-- AppHeader
 |   •-- NotLoggedIn
-|-- SearchTodos - /search
+|-- SearchTodos ------ /search
 |   |-- AppHeader
 |   |-- TodosTable
 |   •-- NotLoggedIn
-|-- Login - /login
-|-- Signup - /signup
-•-- NotFound - all other routes
+|-- Login ------------ /login
+|-- Signup ----------- /signup
+•-- NotFound --------- all other routes
     •-- AppHeader
 ```
 
-In addition, some smaller components are used to simplify large components 
+In addition, some smaller components are used to simplify larger ones 
 or reduce code duplication:
 
 ```
@@ -180,6 +191,7 @@ higher-level components for common functionality. For example, the `Login` and
 their layout, which makes the code hard to read and maintain.
 `useStyles` and `makeStyles` (Material UI) could be used instead.
 
+---
 
 ## Other Information
 
@@ -190,10 +202,16 @@ Name | Matriculation number
 Dorcas Tabitha Tan | A0190356A
 
 Documents:
+* [Write-up](/docs/final-write-up.pdf)
 * [Learning journal](/docs/Journal.md)
-<!-- * [Write-up](/docs/mid-assignment-write-up.pdf) -->
 
 ### Using the application
+
+To test the web application without creating a new account, you may use 
+the following log in credentials:
+
+    Username: janedoe
+    Password: 9920heroku
 
 How to test *To Do List* locally:
 
@@ -212,7 +230,8 @@ Software-related information:
     0.10.2 – for creating the Rails server API
     * [Reach Router](https://github.com/reach/router) – to handle routing on 
     the React front-end
-    * [Formik](https://github.com/jaredpalmer/formik) – for building React forms
+    * [Formik](https://github.com/jaredpalmer/formik) – for formatting (React)
+    form data according to JSON API specifications
     * [Material UI](https://github.com/mui-org/material-ui) (core, icons) 
     – for easy styling
     * [bcrypt-ruby](https://github.com/codahale/bcrypt-ruby) – for securing 
