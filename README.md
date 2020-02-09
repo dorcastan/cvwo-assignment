@@ -1,6 +1,6 @@
 # To-Do List
 
-[**Try out the live app here!**](http://todolist-9920.herokuapp.com/)
+[Try out the live app here!](http://todolist-9920.herokuapp.com/)
 
 ## About *To-Do List*
 
