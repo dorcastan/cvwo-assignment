@@ -1,5 +1,7 @@
 # To-Do List
 
+[**Try out the live app here!**](http://todolist-9920.herokuapp.com/)
+
 ## About *To-Do List*
 
 *To Do List* provides a convenient online service to keep track of tasks to 
@@ -7,8 +9,6 @@ be done.
 
 With a simple sign-up process and access to tasks from different devices, 
 it is easy to jot down notes or tasks to be done later. 
-
-[Try out the live app here!](http://todolist-9920.herokuapp.com/)
 
 > Note: *To-Do List* is intended for desktop use. While it still works on 
 mobile devices, the layout and display size may not be optimal.
